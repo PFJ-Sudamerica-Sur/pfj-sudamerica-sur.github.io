@@ -49,6 +49,8 @@ function onOpen() {
     .addSeparator()
     .addItem("Crear planilla de prueba (fila seleccionada, sin compartir)", "crearPlanillaPrueba")
     .addItem("Crear o actualizar planillas por sesión", "crearPlanillasSesion")
+    .addSeparator()
+    .addItem("Rehacer la hoja Resumen de este panel", "resumenMaestra")
     .addToUi();
 }
 
@@ -252,6 +254,7 @@ function crearPlanillasSesion() {
     if (!sesion || (!correos.length && !url)) return;
 
     const planilla = url ? SpreadsheetApp.openByUrl(url) : nuevaPlanillaSesion_(hc, i + 2, pais, sesion);
+    if (!planilla.getSheetByName("Resumen")) construirResumen_(planilla, false);
 
     // Compartir solo con los coordinadores de la lista (solo lectura) y quitar a quienes ya no están
     const archivo = DriveApp.getFileById(planilla.getId());
@@ -261,6 +264,7 @@ function crearPlanillasSesion() {
     resumen.push(sesion + ": " + (correos.length ? correos.length + " coordinador(es)" : "sin correos"));
   });
 
+  if (!ss.getSheetByName("Resumen")) { construirResumen_(ss, true); ss.setActiveSheet(hc); }
   ui.alert(resumen.length
     ? "Listo. Planillas creadas o actualizadas:\n\n" + resumen.join("\n")
     : "No hay sesiones con correos en la pestaña Coordinadores.");
@@ -279,7 +283,11 @@ function crearPlanillaPrueba() {
   }
   const [pais, sesion, , urlActual] = hc.getRange(fila, 1, 1, 4).getValues()[0].map((v) => String(v).trim());
   if (!sesion) { ui.alert("Esa fila no tiene sesión."); return; }
-  if (urlActual) { ui.alert("La sesión " + sesion + " ya tiene su planilla:\n\n" + urlActual); return; }
+  if (urlActual) {
+    construirResumen_(SpreadsheetApp.openByUrl(urlActual), false);
+    ui.alert("La sesión " + sesion + " ya tenía su planilla (se actualizó su hoja Resumen):\n\n" + urlActual);
+    return;
+  }
   const planilla = nuevaPlanillaSesion_(hc, fila, pais, sesion);
   ui.alert("Planilla de prueba creada para " + sesion + " (todavía no está compartida con nadie):\n\n" + planilla.getUrl() +
     "\n\nCuando uses \"Crear o actualizar planillas por sesión\", esta misma planilla se compartirá con sus coordinadores.");
@@ -296,8 +304,71 @@ function nuevaPlanillaSesion_(hc, fila, pais, sesion) {
   const inf = deSesion("Informe", 5), resp = deSesion("Respuestas", 4);
   if (inf.length) planilla.getSheetByName("Informe").getRange(2, 1, inf.length, inf[0].length).setValues(inf);
   if (resp.length) planilla.getSheetByName("Respuestas").getRange(2, 1, resp.length, resp[0].length).setValues(resp);
+  construirResumen_(planilla, false);
   hc.getRange(fila, 4).setValue(planilla.getUrl());
   return planilla;
+}
+
+/**
+ * Hoja "Resumen": panel de estadísticas para los coordinadores. Son fórmulas, así que se actualiza sola
+ * cada vez que llega una capacitación. En la planilla maestra agrega además el conteo por sesión.
+ */
+function construirResumen_(ss, maestra) {
+  let h = ss.getSheetByName("Resumen");
+  if (h) h.clear(); else h = ss.insertSheet("Resumen", 0);
+  hoja_("Informe", ss); hoja_("Respuestas", ss);
+
+  const pct = (m) => `=IFERROR(SUMPRODUCT((Respuestas!G2:G&""="${m}")*(Respuestas!J2:J="Sí"))/SUMPRODUCT((Respuestas!G2:G&""="${m}")*1);"")`;
+  const celdas = [
+    ["A1", maestra ? "RESUMEN DE LA CAPACITACIÓN EN LÍNEA · TODAS LAS SESIONES" : "RESUMEN DE LA CAPACITACIÓN EN LÍNEA DE TU SESIÓN"],
+    ["A2", "Se actualiza solo cada vez que un consejero presiona \"Finalizar y enviar\". El detalle está en las pestañas Informe y Respuestas."],
+    ["A4", "Consejeros que terminaron"], ["B4", "=COUNTA(Informe!C2:C)"],
+    ["A5", "  · En lugar de la capacitación presencial"], ["B5", "=COUNTIF(Informe!I2:I;\"*lugar*\")"],
+    ["A6", "  · Como repaso (asistieron a la presencial)"], ["B6", "=COUNTIF(Informe!I2:I;\"*repaso*\")"],
+    ["A7", "Promedio de respuestas correctas"], ["B7", "=IFERROR(AVERAGE(Informe!P2:P);\"\")"],
+    ["A8", "Último envío"], ["B8", "=IFERROR(IF(COUNT(Informe!A2:A)=0;\"\";MAX(Informe!A2:A));\"\")"],
+    ["A10", "Respuestas correctas por módulo"],
+    ["A11", "Módulo 1 · Bienvenida y ¿qué es PFJ?"], ["B11", pct(1)],
+    ["A12", "Módulo 2 · El día lunes"], ["B12", pct(2)],
+    ["A13", "Módulo 3 · El día martes y el baile"], ["B13", pct(3)],
+    ["A14", "Módulo 4 · Talleres y mensaje final"], ["B14", pct(4)],
+    // En la maestra se cuenta por sesión (hay demasiadas estacas); en cada sesión, por estaca
+    ["A16", maestra ? "Consejeros por sesión" : "Consejeros por estaca"],
+    ["A17", maestra
+      ? "=IFERROR(QUERY(Informe!C2:F;\"select F, count(C) where C is not null group by F order by count(C) desc label F 'Sesión', count(C) 'Consejeros'\";0);\"Todavía no hay envíos\")"
+      : "=IFERROR(QUERY(Informe!C2:G;\"select G, count(C) where C is not null group by G order by count(C) desc label G 'Estaca', count(C) 'Consejeros'\";0);\"Todavía no hay envíos\")"],
+    ["D16", "Preguntas con más respuestas incorrectas (para reforzar en la sesión recuperativa)"],
+    ["D17", "=IFERROR(QUERY(Respuestas!G2:J;\"select G, H, count(J) where J = 'No' group by G, H order by count(J) desc limit 10 label G 'Módulo', H 'Pregunta', count(J) 'Incorrectas'\";0);\"Todavía no hay respuestas incorrectas\")"],
+    ["D30", "Consejeros que terminaron"],
+    ["D31", "=IFERROR(QUERY(Informe!A2:Q;\"select C, G, I, P, A where C is not null order by C label C 'Nombre', G 'Estaca', I 'Modalidad', P '% correctas', A 'Fecha de envío'\";0);\"Todavía no hay envíos\")"]
+  ];
+  // setFormula usa nombres en inglés y comas; las reemplazamos aquí para no depender del idioma de la planilla
+  celdas.forEach(([ref, v]) => {
+    const r = h.getRange(ref);
+    if (String(v).startsWith("=")) r.setFormula(String(v).replace(/;/g, ",")); else r.setValue(v);
+  });
+
+  h.getRange("A1").setFontSize(14).setFontWeight("bold");
+  h.getRange("A2").setFontColor("#666666");
+  ["A4", "A7", "A8", "A10", "A16", "D16", "D30"].forEach((r) => h.getRange(r).setFontWeight("bold"));
+  h.getRange("B4:B6").setFontSize(12).setFontWeight("bold");
+  h.getRange("B7").setNumberFormat("0%").setFontSize(12).setFontWeight("bold");
+  h.getRange("B8").setNumberFormat("dd/mm/yyyy hh:mm");
+  h.getRange("B11:B14").setNumberFormat("0%");
+  h.getRange("A10:B10").setBackground("#fff2cc");
+  h.getRange("A16:B16").setBackground("#fff2cc");
+  h.getRange("D16:F16").setBackground("#fff2cc");
+  h.getRange("D30:H30").setBackground("#fff2cc");
+  h.getRange("G32:G200").setNumberFormat("0%");
+  h.setColumnWidth(1, 330); h.setColumnWidth(2, 110); h.setColumnWidth(3, 30);
+  h.setColumnWidth(4, 90); h.setColumnWidth(5, 420); h.setColumnWidth(6, 110);
+  h.setColumnWidth(7, 110); h.setColumnWidth(8, 150);
+  h.setHiddenGridlines(true);
+  ss.setActiveSheet(h);
+}
+
+function resumenMaestra() {
+  construirResumen_(SpreadsheetApp.getActiveSpreadsheet(), true);
 }
 
 function correosDe_(texto) {
