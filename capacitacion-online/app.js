@@ -10,7 +10,7 @@
 const CONFIG = {
   // URL del Apps Script publicado como aplicación web (termina en /exec).
   // Mientras esté vacía, se usa datos.json y todo se guarda solo en el dispositivo.
-  ENDPOINT: "",
+  ENDPOINT: "https://script.google.com/macros/s/AKfycbz_uyMMsfadB0P6B9SPKAzrLJNQawYL0zOjWoUSAW40qNIFWK3pKv3yubR1O2ZbmJ4kLw/exec",
   CAPACITACION: "C1"
 };
 
