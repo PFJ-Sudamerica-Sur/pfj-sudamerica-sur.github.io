@@ -16,7 +16,7 @@ const CONFIG = {
 
 const CLAVE = "pfj2027-" + CONFIG.CAPACITACION;
 const estado = JSON.parse(localStorage.getItem(CLAVE) || "{}");
-estado.secciones ||= {}; estado.repasos ||= {}; estado.bailes ||= [];
+estado.secciones ||= {}; estado.repasos ||= {}; estado.bailes ||= []; estado.respuestas ||= {};
 const guardar = () => localStorage.setItem(CLAVE, JSON.stringify(estado));
 const $ = (s, r = document) => r.querySelector(s);
 const $$ = (s, r = document) => [...r.querySelectorAll(s)];
@@ -184,10 +184,6 @@ function iniciarRegistro() {
       modalidad: f.modalidad.value
     };
     guardar(); pintar(); pintarSegunSesion();
-    enviar("registro", {});
-    // reenviar lo que ya se hubiera hecho antes de registrarse
-    Object.entries(estado.secciones).forEach(([id, v]) => v && enviar("seccion", { seccion: id, completado: true }));
-    Object.entries(estado.repasos).forEach(([m, r]) => enviar("repaso", { modulo: m, puntaje: r.puntaje, total: r.total }));
   });
   $("#reg-cambiar").addEventListener("click", () => {
     const c = estado.consejero, f = $("#reg-form");
@@ -258,7 +254,7 @@ function actualizarProgreso() {
   let n = 0;
   secciones.forEach((s) => {
     const hecho = !!estado.secciones[s.id];
-    $(".completar input", s).checked = hecho;
+    $(".completar:not(.casilla) input", s).checked = hecho;
     if (hecho) n++;
   });
   modulos().forEach((m) => {
@@ -271,11 +267,10 @@ function actualizarProgreso() {
 }
 function iniciarSecciones() {
   $$("[data-seccion]").forEach((s) => {
-    const cb = $(".completar input", s);
+    const cb = $(".completar:not(.casilla) input", s);
     cb.addEventListener("change", () => {
       if (cb.checked && !pedirRegistro()) { cb.checked = false; return; }
       estado.secciones[s.id] = cb.checked; guardar(); actualizarProgreso(); pintarFinal();
-      enviar("seccion", { seccion: s.id, completado: cb.checked });
     });
   });
   actualizarProgreso();
@@ -296,7 +291,6 @@ function iniciarRepasos() {
       puntaje.textContent = n ? `${ok} de ${preguntas.length} correctas` : (previo ? `Tu resultado: ${previo.puntaje} de ${previo.total}` : "");
       if (n === preguntas.length && !previo) {
         estado.repasos[m] = { puntaje: ok, total: preguntas.length }; guardar();
-        enviar("repaso", { modulo: m, puntaje: ok, total: preguntas.length });
         pintarFinal();
       }
     };
@@ -312,7 +306,7 @@ function iniciarRepasos() {
         b.classList.add(correcta ? "ok" : "mal");
         $(`.opcion[data-j='${q.correcta}']`, div)?.classList.add("ok");
         $(".explica", div).classList.add("ver");
-        if (!previo) enviar("respuesta", { modulo: m, pregunta: q.pregunta, respuesta: q.opciones[j], correcta });
+        if (!previo) { (estado.respuestas[m] ||= [])[i] = { pregunta: q.pregunta, respuesta: q.opciones[j], correcta }; guardar(); }
         pintarPuntaje();
       }));
       cont.appendChild(div);
@@ -341,11 +335,10 @@ function iniciarBailes() {
 
   const lista = $("#baile-practicados");
   lista.innerHTML = bailes.map((b) =>
-    `<label class="completar"><input type="checkbox" value="${esc(b.titulo)}"${estado.bailes.includes(b.titulo) ? " checked" : ""}> ${esc(b.titulo)}</label>`).join("");
+    `<label class="completar casilla"><input type="checkbox" value="${esc(b.titulo)}"${estado.bailes.includes(b.titulo) ? " checked" : ""}> ${esc(b.titulo)}</label>`).join("");
   $$("input", lista).forEach((cb) => cb.addEventListener("change", () => {
     if (cb.checked && !pedirRegistro()) { cb.checked = false; return; }
     estado.bailes = $$("input:checked", lista).map((x) => x.value); guardar();
-    enviar("seccion", { seccion: "Baile practicado: " + cb.value, completado: cb.checked });
   }));
 }
 
@@ -387,8 +380,11 @@ function iniciarFinal() {
     const r = resumenAvance();
     if (!r.every((x) => x.listo)) return;
     estado.finalizado = new Date().toISOString(); guardar();
+    // Recién aquí se envía todo junto: los coordinadores solo reciben capacitaciones terminadas.
     const correctas = r.reduce((a, x) => a + (x.repaso?.puntaje || 0), 0), total = r.reduce((a, x) => a + (x.repaso?.total || 0), 0);
-    enviar("final", { correctas, totalPreguntas: total, bailes: estado.bailes.join(", ") });
+    const modulosInforme = r.map((x) => ({ n: x.n, titulo: x.titulo, puntaje: x.repaso?.puntaje ?? "", total: x.repaso?.total ?? "" }));
+    const respuestas = Object.entries(estado.respuestas).flatMap(([m, lista]) => (lista || []).filter(Boolean).map((q) => ({ modulo: m, ...q })));
+    enviar("final", { correctas, totalPreguntas: total, bailes: estado.bailes.join(", "), modulos: modulosInforme, respuestas });
     pintarFinal();
   });
   pintarFinal();

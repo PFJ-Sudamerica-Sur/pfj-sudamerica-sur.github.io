@@ -307,3 +307,8 @@ blockquote { margin: 0 0 18px; padding: 0 0 0 18px; border-left: 3px solid var(-
   .titulo-bloque { margin-top: 40px; }
   .titulo-bloque h1 { font-size: 28px; }
 }
+
+/* ---------- Figura con imagen ---------- */
+.figura { margin: 0 0 18px; }
+.figura img { width: 100%; height: auto; display: block; }
+.figura figcaption { font-size: 13px; color: var(--gris-medio); font-weight: 600; margin-top: 8px; }

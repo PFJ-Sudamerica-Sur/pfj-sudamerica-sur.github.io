@@ -4,7 +4,7 @@
  * Esta planilla de Google es el "panel admin" de la página:
  *   - Lo que escribas en las pestañas Videos, Fotos staff, Info sesiones, Estacas y Preguntas
  *     aparece en la página (al recargarla).
- *   - Lo que hacen los consejeros llega a las pestañas Registros, Avance, Repasos, Respuestas y Resumen.
+ *   - Cuando un consejero presiona "Finalizar y enviar", su capacitación completa llega a Informe (una fila por consejero) y Respuestas (el detalle).
  * Solo pueden editar las personas con las que compartas esta planilla.
  *
  * Cómo instalarlo (una sola vez):
@@ -21,7 +21,6 @@
  */
 
 const SITIO = "https://pfj-sudamerica-sur.github.io/capacitacion-online/";
-const TOTAL_SECCIONES = { C1: 10, C2: 0, C3: 0 }; // completar cuando existan la 2ª y 3ª
 
 const PANEL = {
   "Videos":        ["Clave (no cambiar)", "Módulo", "Dónde aparece", "Título", "Enlace del video (YouTube o Drive)", "Solo para la sesión (vacío = todas)"],
@@ -31,13 +30,9 @@ const PANEL = {
   "Preguntas":     ["Módulo", "Pregunta", "Opción A", "Opción B", "Opción C", "Opción D", "Correcta (A, B, C o D)", "Explicación"]
 };
 const RESPUESTAS = {
-  Registros:  ["Fecha", "Capacitación", "Nombre", "Correo", "País", "Sesión", "Estaca", "Estaca escrita a mano", "Modalidad"],
-  Avance:     ["Fecha", "Capacitación", "Nombre", "Correo", "Sesión", "Estaca", "Sección", "Completado"],
-  Repasos:    ["Fecha", "Capacitación", "Nombre", "Correo", "Sesión", "Estaca", "Módulo", "Correctas", "Total"],
-  Respuestas: ["Fecha", "Capacitación", "Nombre", "Correo", "Sesión", "Estaca", "Módulo", "Pregunta", "Respuesta elegida", "¿Correcta?"],
-  Finalizados: ["Fecha", "Capacitación", "Nombre", "Correo", "Sesión", "Estaca", "Correctas en repasos", "Total preguntas", "Bailes practicados"],
-  Resumen:    ["Sesión", "Estaca", "Nombre", "Correo", "Modalidad", "Capacitación", "Secciones completadas", "Total secciones",
-               "% avance", "Repasos (correctas/total)", "Última actividad", "Estado"]
+  Informe:    ["Fecha de envío", "Capacitación", "Nombre", "Correo", "País", "Sesión", "Estaca", "Estaca escrita a mano", "Modalidad",
+               "Repaso módulo 1", "Repaso módulo 2", "Repaso módulo 3", "Repaso módulo 4", "Total correctas", "Total preguntas", "% correctas", "Bailes practicados"],
+  Respuestas: ["Fecha de envío", "Capacitación", "Nombre", "Correo", "Sesión", "Estaca", "Módulo", "Pregunta", "Respuesta elegida", "¿Correcta?"]
 };
 const LETRAS = ["A", "B", "C", "D"];
 
@@ -45,7 +40,6 @@ const LETRAS = ["A", "B", "C", "D"];
 function onOpen() {
   SpreadsheetApp.getUi().createMenu("Capacitación PFJ")
     .addItem("Preparar panel (primera vez)", "prepararPanel")
-    .addItem("Actualizar resumen", "actualizarResumen")
     .addToUi();
 }
 
@@ -87,7 +81,7 @@ function prepararPanel() {
   p.getRange("G2:G500").setDataValidation(SpreadsheetApp.newDataValidation().requireValueInList(LETRAS, true).build());
   ss.getSheetByName("Videos").getRange("A:A").setBackground("#eeeeee");
 
-  Object.keys(RESPUESTAS).forEach(hojaRespuestas_);
+  Object.keys(RESPUESTAS).forEach(hoja_);
   const hoja1 = ss.getSheetByName("Hoja 1") || ss.getSheetByName("Sheet1");
   if (hoja1 && hoja1.getLastRow() === 0) ss.deleteSheet(hoja1);
   ss.setActiveSheet(ss.getSheetByName("Instrucciones"));
@@ -115,7 +109,7 @@ function instrucciones_(ss) {
     [""],
     ["PREGUNTAS: solo de alternativas. Escribe 2 a 4 opciones y en \"Correcta\" la letra de la buena. Para quitar una pregunta, borra la fila."],
     [""],
-    ["RESPUESTAS DE LOS CONSEJEROS: llegan solas a Registros, Avance, Repasos y Respuestas. Resumen muestra una fila por consejero."],
+    ["RESPUESTAS DE LOS CONSEJEROS: solo llegan cuando el consejero termina y presiona \"Finalizar y enviar\". Informe tiene una fila por consejero con sus puntajes; Respuestas tiene cada pregunta respondida."],
     ["No compartas esta planilla con los consejeros: contiene nombres y correos."]
   ];
   h.getRange(1, 1, t.length, 1).setValues(t);
@@ -174,16 +168,23 @@ function doPost(e) {
   lock.waitLock(20000);
   try {
     const d = JSON.parse(e.postData.contents);
+    // Solo se guardan capacitaciones terminadas: la página envía todo junto al presionar "Finalizar y enviar".
+    if (d.tipo !== "final") return ContentService.createTextOutput("ignorado");
     const fecha = new Date(d.fecha || Date.now());
-    const base = [fecha, d.capacitacion, d.nombre, (d.correo || "").toLowerCase(), d.sesion, d.estaca].map(limpiar_);
-    const agregar = (hoja, extra) => hojaRespuestas_(hoja).appendRow(base.concat(extra.map(limpiar_)));
-    if (d.tipo === "registro") hojaRespuestas_("Registros").appendRow([fecha, d.capacitacion, d.nombre, (d.correo || "").toLowerCase(),
-                                 d.pais, d.sesion, d.estaca, d.estacaEscrita ? "Sí" : "No", d.modalidad].map(limpiar_));
-    if (d.tipo === "seccion")   agregar("Avance", [d.seccion, d.completado ? "Sí" : "No"]);
-    if (d.tipo === "repaso")    agregar("Repasos", [d.modulo, d.puntaje, d.total]);
-    if (d.tipo === "respuesta") agregar("Respuestas", [d.modulo, d.pregunta, d.respuesta, d.correcta ? "Sí" : "No"]);
-    if (d.tipo === "final")     agregar("Finalizados", [d.correctas, d.totalPreguntas, d.bailes]);
-    if (d.tipo !== "respuesta") actualizarResumen();
+    const correo = String(d.correo || "").toLowerCase();
+    const mod = (n) => (d.modulos || []).find((m) => String(m.n) === String(n)) || {};
+    const pm = (n) => { const m = mod(n); return m.total !== "" && m.total != null ? m.puntaje + "/" + m.total : ""; };
+    const pct = Number(d.totalPreguntas) ? Number(d.correctas) / Number(d.totalPreguntas) : "";
+    hoja_("Informe").appendRow([fecha, d.capacitacion, d.nombre, correo, d.pais, d.sesion, d.estaca, d.estacaEscrita ? "Sí" : "No",
+      d.modalidad, pm(1), pm(2), pm(3), pm(4), d.correctas, d.totalPreguntas, pct, d.bailes].map(limpiar_));
+    const h = hoja_("Informe");
+    h.getRange(h.getLastRow(), 16).setNumberFormat("0%");
+    const filas = (d.respuestas || []).map((q) => [fecha, d.capacitacion, d.nombre, correo, d.sesion, d.estaca,
+      q.modulo, q.pregunta, q.respuesta, q.correcta ? "Sí" : "No"].map(limpiar_));
+    if (filas.length) {
+      const r = hoja_("Respuestas");
+      r.getRange(r.getLastRow() + 1, 1, filas.length, filas[0].length).setValues(filas);
+    }
     return ContentService.createTextOutput("ok");
   } finally {
     lock.releaseLock();
@@ -198,43 +199,7 @@ function limpiar_(v) {
   return s;
 }
 
-/** Reconstruye la hoja Resumen: una fila por consejero y capacitación. */
-function actualizarResumen() {
-  const personas = {};
-  const persona = (correo, cap, fecha) => {
-    const k = correo + "|" + cap;
-    personas[k] = personas[k] || { cap, correo, nombre: "", sesion: "", estaca: "", modalidad: "", secciones: {}, repasos: {}, ultima: fecha };
-    const p = personas[k];
-    if (fecha > p.ultima) p.ultima = fecha;
-    return p;
-  };
-  filas_("Registros").forEach((r) => { const p = persona(r[3], r[1], r[0]); p.nombre = r[2]; p.sesion = r[5]; p.estaca = r[6]; p.modalidad = r[8]; });
-  filas_("Avance").forEach((r) => {
-    const p = persona(r[3], r[1], r[0]); p.nombre = p.nombre || r[2];
-    if (!String(r[6]).startsWith("Baile practicado")) p.secciones[r[6]] = r[7] === "Sí";
-  });
-  filas_("Finalizados").forEach((r) => { const p = persona(r[3], r[1], r[0]); p.nombre = p.nombre || r[2]; p.finalizo = true; });
-  filas_("Repasos").forEach((r) => { const p = persona(r[3], r[1], r[0]); p.nombre = p.nombre || r[2]; p.repasos[r[6]] = [r[7], r[8]]; });
-
-  const salida = Object.values(personas).map((p) => {
-    const hechas = Object.values(p.secciones).filter(Boolean).length;
-    const total = TOTAL_SECCIONES[p.cap] || hechas;
-    let ok = 0, tot = 0;
-    Object.values(p.repasos).forEach(([a, b]) => { ok += Number(a); tot += Number(b); });
-    const pct = total ? hechas / total : 0;
-    const estado = p.finalizo ? "Finalizó y envió" : (pct >= 1 ? "Completó, falta enviar" : (hechas ? "En curso" : "Solo registrado"));
-    return [p.sesion, p.estaca, p.nombre, p.correo, p.modalidad, p.cap, hechas, total, pct, tot ? ok + "/" + tot : "", p.ultima, estado];
-  }).sort((a, b) => (a[0] + a[1] + a[2]).localeCompare(b[0] + b[1] + b[2]));
-
-  const h = hojaRespuestas_("Resumen");
-  if (h.getLastRow() > 1) h.getRange(2, 1, h.getLastRow() - 1, RESPUESTAS.Resumen.length).clearContent();
-  if (salida.length) {
-    h.getRange(2, 1, salida.length, RESPUESTAS.Resumen.length).setValues(salida);
-    h.getRange(2, 9, salida.length, 1).setNumberFormat("0%");
-  }
-}
-
-function hojaRespuestas_(nombre) {
+function hoja_(nombre) {
   const ss = SpreadsheetApp.getActiveSpreadsheet();
   let h = ss.getSheetByName(nombre);
   if (!h) {
@@ -244,9 +209,4 @@ function hojaRespuestas_(nombre) {
     h.getRange(1, 1, 1, RESPUESTAS[nombre].length).setFontWeight("bold").setBackground("#d9ead3");
   }
   return h;
-}
-
-function filas_(nombre) {
-  const h = hojaRespuestas_(nombre);
-  return h.getLastRow() > 1 ? h.getRange(2, 1, h.getLastRow() - 1, RESPUESTAS[nombre].length).getValues() : [];
 }
