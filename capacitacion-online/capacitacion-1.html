@@ -89,10 +89,10 @@
           </ul>
         </div>
         <h3>Estructura de liderazgo</h3>
-        <p class="video__quien">Coordinadores · 10 min</p>
+        <p class="video__quien">Setenta de Área · 10 min</p>
         <div class="video" data-video="linea-autoridad">
           <div class="poster"><div class="poster__texto">Del Setenta<br>al consejero</div><button class="reproducir" aria-label="Reproducir"></button></div>
-          <p class="video__pie"><b>La línea de autoridad</b><span>Los Coordinadores explican el canal correcto de comunicación durante la preparación y la semana de PFJ.</span></p>
+          <p class="video__pie"><b>La línea de autoridad</b><span>Un Setenta de Área explica el canal correcto de comunicación durante la preparación y la semana de PFJ.</span></p>
         </div>
         <div class="video" data-video="adelanto-semana">
           <div class="poster"><div class="poster__texto">Adelanto de<br>la semana</div><button class="reproducir" aria-label="Reproducir"></button></div>
@@ -164,12 +164,11 @@
         </div>
         <p>La noche de hogar incluye una lección, juegos y el establecimiento de metas. Los juegos se hacen por compañía; si el análisis de un juego toma demasiado tiempo, no lo apresures: un solo juego puede ser suficiente.</p>
         <p class="lee"><b>Lee:</b> Manual para el Personal, páginas 32–37.</p>
-        <p><b>ACTIVIDAD:</b> juega uno o dos de los juegos de la noche de hogar con tu familia o amigos y dirige después un breve análisis. Luego fija una meta personal siguiendo “Un modelo para el crecimiento”. ¡Y no olvides el postre!</p>
         <label class="completar"><input type="checkbox"> Marcar como completado</label>
       </section>
 
       <section class="seccion" id="taller-1" data-seccion>
-        <h2>Taller: Inclusión durante el check-in</h2>
+        <h2>Taller 1: Inclusión durante el check-in</h2>
         <p class="meta"><span class="etq">10 min</span><span class="etq">Matrimonio Codirector</span></p>
         <div class="video" data-video="taller-inclusion">
           <div class="poster"><div class="poster__texto">Inclusión<br>en el check-in</div><button class="reproducir" aria-label="Reproducir"></button></div>
@@ -241,11 +240,18 @@
       <section class="seccion" id="baile" data-seccion>
         <h2>Baile en línea</h2>
         <p class="meta"><span class="etq">10 min</span><span class="etq">Coordinador Auxiliar del baile</span></p>
-        <div class="video" data-video="baile">
-          <div class="poster"><div class="poster__texto">Baile<br>en línea</div><button class="reproducir" aria-label="Reproducir"></button></div>
-          <p class="video__pie"><b>Paso a paso</b><span>El Coordinador Auxiliar encargado del baile te enseña cada paso.</span></p>
+        <p>Hay <b>5 bailes en línea</b>. Elige uno con los botones para ver su paso a paso.</p>
+        <div class="baile" id="baile-selector">
+          <div class="baile__botones" role="tablist" aria-label="Bailes en línea"></div>
+          <div class="video" data-video="baile-1">
+            <div class="poster"><div class="poster__texto">Baile<br>en línea</div><button class="reproducir" aria-label="Reproducir"></button></div>
+          </div>
         </div>
-        <p><b>ACTIVIDAD:</b> aprende el baile con el video y practícalo con alguien más. Lo volveremos a practicar juntos en la sesión recuperativa y en las siguientes capacitaciones.</p>
+        <p><b>ACTIVIDAD:</b> aprende <b>al menos uno o dos bailes</b> y practícalos con alguien más. Los volveremos a practicar juntos en la sesión recuperativa y en las siguientes capacitaciones.</p>
+        <div class="baile__practicados">
+          <p class="baile__pregunta">¿Cuáles practicaste?</p>
+          <div id="baile-practicados"></div>
+        </div>
         <label class="completar"><input type="checkbox"> Marcar como completado</label>
       </section>
 
@@ -258,16 +264,19 @@
       <div class="modulo__cabecera"><span>Módulo 4</span><h2>Talleres y mensaje final</h2></div>
 
       <section class="seccion lista-videos" id="talleres" data-seccion>
-        <h2>Talleres para consejeros</h2>
-        <p>Tres talleres breves impartidos por el staff de tu sesión.</p>
+        <h2>Talleres 2, 3 y 4</h2>
+        <p>Tres talleres breves para consejeros.</p>
+        <h3>Taller 2: Sugerencias para enseñar a los jóvenes</h3>
         <div class="video" data-video="ensenar-jovenes">
           <div class="poster"><div class="poster__texto">Enseñar a<br>los jóvenes</div><button class="reproducir" aria-label="Reproducir"></button></div>
           <p class="video__pie"><b>Sugerencias para enseñar a los jóvenes</b><span>Directora de sesión · 10 min. Basado en <a href="https://www.churchofjesuschrist.org/study/manual/teaching-in-the-saviors-way-2022?lang=spa" target="_blank" rel="noopener">Enseñar a la manera del Salvador</a>.</span></p>
         </div>
+        <h3>Taller 3: Principios de vestimenta y apariencia</h3>
         <div class="video" data-video="vestimenta">
           <div class="poster"><div class="poster__texto">Vestimenta y<br>apariencia</div><button class="reproducir" aria-label="Reproducir"></button></div>
           <p class="video__pie"><b>Principios de vestimenta y apariencia</b><span>Codirectora de sesión · 15 min.</span></p>
         </div>
+        <h3>Taller 4: Tiempo libre de consejeros</h3>
         <div class="video" data-video="tiempo-libre">
           <div class="poster"><div class="poster__texto">Tiempo libre<br>de consejeros</div><button class="reproducir" aria-label="Reproducir"></button></div>
           <p class="video__pie"><b>Tiempo libre de consejeros</b><span>Codirector de sesión · 10 min. La importancia del tiempo libre y cómo usarlo con sabiduría, según el punto 4 de la Guía de Aplicación al Área y la página 4 del Manual para el Personal.</span></p>
@@ -293,6 +302,15 @@
       </section>
 
       <div class="repaso" data-modulo-repaso="4"></div>
+
+      <section class="final" id="finalizar">
+        <h2>Terminar la capacitación</h2>
+        <p>Tu avance se va guardando solo cada vez que marcas una sección o respondes una pregunta. Cuando termines todo, presiona <b>Finalizar y enviar</b> para avisar a los coordinadores de tu sesión.</p>
+        <div id="final-resumen"></div>
+        <button type="button" class="boton-rojo boton-grande" id="final-enviar">Finalizar y enviar</button>
+        <div id="final-confirmacion"></div>
+      </section>
+
       <div class="modulo__nav"></div>
     </div>
 

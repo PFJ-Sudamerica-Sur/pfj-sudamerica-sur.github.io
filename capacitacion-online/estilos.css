@@ -20,6 +20,7 @@
 }
 
 * { box-sizing: border-box; }
+[hidden] { display: none !important; }
 html { scroll-behavior: smooth; }
 body {
   margin: 0;
@@ -269,6 +270,30 @@ blockquote { margin: 0 0 18px; padding: 0 0 0 18px; border-left: 3px solid var(-
 .campos select:disabled { background: var(--gris-suave); }
 .info-sesion p { margin: 10px 0 0; font-size: 15px; }
 
+/* ---------- Bailes en línea ---------- */
+.baile__botones { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; margin: 0 0 10px; }
+.baile__btn { background: #fff; border: 1px solid var(--linea); border-radius: 3px; padding: 7px 6px; font: 600 13px/1.25 "Open Sans", sans-serif; color: var(--texto); cursor: pointer; text-align: center; }
+.baile__btn span { display: block; font-size: 11px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; color: var(--gris-medio); }
+.baile__btn[aria-selected="true"] { border-color: var(--rojo); background: #fdf0f3; }
+.baile__practicados { background: var(--gris-suave); padding: 12px 16px; margin: 0 0 8px; }
+.baile__pregunta { font-weight: 700; font-size: 15px; margin: 0 0 4px !important; }
+.baile__practicados .completar { margin: 6px 0 0; }
+
+/* ---------- Terminar ---------- */
+.final { margin: 56px 0 0; border: 2px solid var(--pfj-amarillo); padding: 20px 22px; scroll-margin-top: 20px; }
+.final h2 { font-size: 20px; font-weight: 700; text-transform: uppercase; margin: 0 0 10px; }
+.final p { font-size: 15px; }
+.final__lista { list-style: none; padding: 0; margin: 0 0 12px; }
+.final__lista li { display: flex; justify-content: space-between; gap: 10px; flex-wrap: wrap; border-top: 1px solid #e3e3e3; padding: 8px 0; font-size: 15px; }
+.final__lista li a { color: var(--gris-medio); font-weight: 600; }
+.final__lista li span { color: var(--gris-medio); font-size: 13px; }
+.final__lista li.ok a { color: var(--pfj-verde); }
+.final__lista li.ok a::before { content: "✓ "; }
+.final__falta { color: var(--gris-medio); }
+.boton-grande { padding: 11px 20px; font-size: 16px; font-weight: 600; }
+.boton-rojo:disabled { background: #c9cfd1; cursor: not-allowed; filter: none; }
+.aviso--ok { background: #eef8f2; border-left: 3px solid var(--pfj-verde); }
+
 @media (max-width: 900px) {
   .mosaico { grid-template-columns: repeat(2, 1fr); }
 }
@@ -276,6 +301,7 @@ blockquote { margin: 0 0 18px; padding: 0 0 0 18px; border-left: 3px solid var(-
   .mosaico { grid-template-columns: 1fr; }
   .indice ol { columns: 1; }
   .indice-modulos { grid-template-columns: 1fr; }
+  .baile__botones { grid-template-columns: repeat(2, 1fr); }
   .modulo__nav { flex-direction: column-reverse; align-items: stretch; text-align: center; }
   .campos { grid-template-columns: 1fr; }
   .titulo-bloque { margin-top: 40px; }

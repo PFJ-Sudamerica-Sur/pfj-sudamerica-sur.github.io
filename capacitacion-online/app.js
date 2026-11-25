@@ -16,7 +16,7 @@ const CONFIG = {
 
 const CLAVE = "pfj2027-" + CONFIG.CAPACITACION;
 const estado = JSON.parse(localStorage.getItem(CLAVE) || "{}");
-estado.secciones ||= {}; estado.repasos ||= {};
+estado.secciones ||= {}; estado.repasos ||= {}; estado.bailes ||= [];
 const guardar = () => localStorage.setItem(CLAVE, JSON.stringify(estado));
 const $ = (s, r = document) => r.querySelector(s);
 const $$ = (s, r = document) => [...r.querySelectorAll(s)];
@@ -218,7 +218,8 @@ function activarModulo(n, destino) {
   modulos().forEach((m) => m.classList.toggle("activo", m.dataset.modulo === String(n)));
   $$(".indice-modulos .modbtn").forEach((b) => b.classList.toggle("activo", b.dataset.modulo === String(n)));
   const el = destino || $(`#modulo-${n}`);
-  if (el) requestAnimationFrame(() => el.scrollIntoView({ behavior: "smooth", block: "start" }));
+  // salto directo (no suave): al cambiar de módulo cambia el alto de la página y un desplazamiento suave queda corrido
+  if (el) setTimeout(() => el.scrollIntoView({ behavior: "instant", block: "start" }), 0);
 }
 function irAHash(desplazar) {
   const id = decodeURIComponent(location.hash.slice(1));
@@ -244,10 +245,10 @@ function iniciarModulos() {
     const nav = $(".modulo__nav", m), lista = modulos();
     const ant = lista[i - 1], sig = lista[i + 1];
     nav.innerHTML = (ant ? `<a class="boton-borde" href="#modulo-${ant.dataset.modulo}">← Módulo ${ant.dataset.modulo}</a>` : `<span></span>`) +
-      (sig ? `<a class="boton-rojo" href="#modulo-${sig.dataset.modulo}">Siguiente: Módulo ${sig.dataset.modulo} →</a>` : `<a class="boton-rojo" href="#sesion-recuperativa">Ir a la sesión recuperativa →</a>`);
+      (sig ? `<a class="boton-rojo" href="#modulo-${sig.dataset.modulo}">Siguiente: Módulo ${sig.dataset.modulo} →</a>` : `<span></span>`);
   });
   window.addEventListener("hashchange", () => irAHash(true));
-  irAHash(false);
+  irAHash(!!location.hash);
 }
 
 /* ---------- Secciones completadas ---------- */
@@ -273,7 +274,7 @@ function iniciarSecciones() {
     const cb = $(".completar input", s);
     cb.addEventListener("change", () => {
       if (cb.checked && !pedirRegistro()) { cb.checked = false; return; }
-      estado.secciones[s.id] = cb.checked; guardar(); actualizarProgreso();
+      estado.secciones[s.id] = cb.checked; guardar(); actualizarProgreso(); pintarFinal();
       enviar("seccion", { seccion: s.id, completado: cb.checked });
     });
   });
@@ -296,6 +297,7 @@ function iniciarRepasos() {
       if (n === preguntas.length && !previo) {
         estado.repasos[m] = { puntaje: ok, total: preguntas.length }; guardar();
         enviar("repaso", { modulo: m, puntaje: ok, total: preguntas.length });
+        pintarFinal();
       }
     };
     preguntas.forEach((q, i) => {
@@ -319,6 +321,79 @@ function iniciarRepasos() {
   });
 }
 
+/* ---------- Bailes en línea (un reproductor, varios botones) ---------- */
+function iniciarBailes() {
+  const sel = $("#baile-selector");
+  if (!sel) return;
+  const bailes = DATOS.videos.filter((v) => /^baile-\d+$/.test(v.clave) && !v.sesion)
+    .sort((a, b) => a.clave.localeCompare(b.clave, "es", { numeric: true }));
+  if (!bailes.length) return;
+  const video = $(".video", sel), botones = $(".baile__botones", sel);
+  botones.innerHTML = bailes.map((b, i) =>
+    `<button type="button" role="tab" class="baile__btn" data-clave="${esc(b.clave)}"><span>Baile ${i + 1}</span>${esc(b.titulo)}</button>`).join("");
+  const elegir = (clave) => {
+    video.dataset.video = clave;
+    $$(".baile__btn", botones).forEach((b) => b.setAttribute("aria-selected", b.dataset.clave === clave));
+    pintarVideos();
+  };
+  $$(".baile__btn", botones).forEach((b) => b.addEventListener("click", () => elegir(b.dataset.clave)));
+  elegir(bailes[0].clave);
+
+  const lista = $("#baile-practicados");
+  lista.innerHTML = bailes.map((b) =>
+    `<label class="completar"><input type="checkbox" value="${esc(b.titulo)}"${estado.bailes.includes(b.titulo) ? " checked" : ""}> ${esc(b.titulo)}</label>`).join("");
+  $$("input", lista).forEach((cb) => cb.addEventListener("change", () => {
+    if (cb.checked && !pedirRegistro()) { cb.checked = false; return; }
+    estado.bailes = $$("input:checked", lista).map((x) => x.value); guardar();
+    enviar("seccion", { seccion: "Baile practicado: " + cb.value, completado: cb.checked });
+  }));
+}
+
+/* ---------- Terminar la capacitación ---------- */
+function resumenAvance() {
+  return modulos().map((m) => {
+    const n = m.dataset.modulo;
+    const ss = $$("[data-seccion]", m);
+    const hechas = ss.filter((s) => estado.secciones[s.id]).length;
+    const tienePreguntas = DATOS.preguntas.some((q) => String(q.modulo) === n);
+    const rep = estado.repasos[n];
+    return { n, titulo: $(".modulo__cabecera h2", m).textContent, hechas, total: ss.length,
+             repaso: rep, listo: hechas === ss.length && (!tienePreguntas || !!rep) };
+  });
+}
+function pintarFinal() {
+  const cont = $("#final-resumen");
+  if (!cont) return;
+  const r = resumenAvance(), todo = r.every((x) => x.listo);
+  cont.innerHTML = `<ul class="final__lista">` + r.map((x) =>
+    `<li class="${x.listo ? "ok" : ""}"><a href="#modulo-${x.n}">Módulo ${x.n}: ${esc(x.titulo)}</a><span>${x.hechas} de ${x.total} secciones · ` +
+    (x.repaso ? `repaso ${x.repaso.puntaje} de ${x.repaso.total}` : "repaso pendiente") + `</span></li>`).join("") + `</ul>` +
+    (todo ? "" : `<p class="final__falta">Te falta completar lo que está en gris. Haz clic en el módulo para terminarlo.</p>`);
+  const btn = $("#final-enviar");
+  btn.disabled = !todo || !!estado.finalizado;
+  btn.textContent = estado.finalizado ? "Capacitación enviada ✓" : "Finalizar y enviar";
+  const conf = $("#final-confirmacion");
+  if (estado.finalizado) {
+    conf.innerHTML = `<div class="aviso aviso--ok"><b>¡Listo, ${esc(estado.consejero?.nombre?.split(" ")[0] || "")}! Terminaste la parte en línea.</b><br>` +
+      (CONFIG.ENDPOINT ? "Tus coordinadores ya recibieron tu capacitación." : "Tu avance quedó guardado en este dispositivo (el envío a los coordinadores aún no está conectado).") +
+      `<br>No olvides asistir a la <a href="#sesion-recuperativa">sesión recuperativa</a>.</div>`;
+  } else conf.innerHTML = "";
+}
+function iniciarFinal() {
+  const btn = $("#final-enviar");
+  if (!btn) return;
+  btn.addEventListener("click", () => {
+    if (!pedirRegistro()) return;
+    const r = resumenAvance();
+    if (!r.every((x) => x.listo)) return;
+    estado.finalizado = new Date().toISOString(); guardar();
+    const correctas = r.reduce((a, x) => a + (x.repaso?.puntaje || 0), 0), total = r.reduce((a, x) => a + (x.repaso?.total || 0), 0);
+    enviar("final", { correctas, totalPreguntas: total, bailes: estado.bailes.join(", ") });
+    pintarFinal();
+  });
+  pintarFinal();
+}
+
 /* ---------- Inicio ---------- */
 (async () => {
   await cargarDatos();
@@ -326,5 +401,7 @@ function iniciarRepasos() {
   iniciarModulos();
   iniciarSecciones();
   iniciarRepasos();
+  iniciarBailes();
+  iniciarFinal();
   pintarSegunSesion();
 })();

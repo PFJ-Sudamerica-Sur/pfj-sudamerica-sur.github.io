@@ -35,6 +35,7 @@ const RESPUESTAS = {
   Avance:     ["Fecha", "Capacitación", "Nombre", "Correo", "Sesión", "Estaca", "Sección", "Completado"],
   Repasos:    ["Fecha", "Capacitación", "Nombre", "Correo", "Sesión", "Estaca", "Módulo", "Correctas", "Total"],
   Respuestas: ["Fecha", "Capacitación", "Nombre", "Correo", "Sesión", "Estaca", "Módulo", "Pregunta", "Respuesta elegida", "¿Correcta?"],
+  Finalizados: ["Fecha", "Capacitación", "Nombre", "Correo", "Sesión", "Estaca", "Correctas en repasos", "Total preguntas", "Bailes practicados"],
   Resumen:    ["Sesión", "Estaca", "Nombre", "Correo", "Modalidad", "Capacitación", "Secciones completadas", "Total secciones",
                "% avance", "Repasos (correctas/total)", "Última actividad", "Estado"]
 };
@@ -103,7 +104,8 @@ function instrucciones_(ss) {
     [""],
     ["VIDEOS: sube el video a YouTube como \"No listado\" (o a Google Drive, compartido con \"Cualquier persona con el enlace\")."],
     ["Copia el enlace y pégalo en la pestaña Videos, en la fila que corresponde. No cambies la columna Clave."],
-    ["Si un video es distinto para cada sesión (por ejemplo, el mensaje final), copia la fila, pega el enlace y escribe la sesión en la última columna."],
+    ["Por defecto todos ven los videos del Área. Si una sesión graba su propio video (pensamiento espiritual o mensaje final), copia la fila, pega su enlace y escribe el nombre de la sesión en la última columna: solo esa sesión lo verá."],
+    ["La línea de autoridad la graba el Setenta de Área y es igual para todos: no agregues versiones por sesión."],
     [""],
     ["FOTOS DEL STAFF: sube la foto a Google Drive, compártela con \"Cualquier persona con el enlace\" y pega el enlace en Fotos staff, con la sesión, el cargo y el nombre."],
     [""],
@@ -180,7 +182,8 @@ function doPost(e) {
     if (d.tipo === "seccion")   agregar("Avance", [d.seccion, d.completado ? "Sí" : "No"]);
     if (d.tipo === "repaso")    agregar("Repasos", [d.modulo, d.puntaje, d.total]);
     if (d.tipo === "respuesta") agregar("Respuestas", [d.modulo, d.pregunta, d.respuesta, d.correcta ? "Sí" : "No"]);
-    if (d.tipo === "registro" || d.tipo === "seccion" || d.tipo === "repaso") actualizarResumen();
+    if (d.tipo === "final")     agregar("Finalizados", [d.correctas, d.totalPreguntas, d.bailes]);
+    if (d.tipo !== "respuesta") actualizarResumen();
     return ContentService.createTextOutput("ok");
   } finally {
     lock.releaseLock();
@@ -206,7 +209,11 @@ function actualizarResumen() {
     return p;
   };
   filas_("Registros").forEach((r) => { const p = persona(r[3], r[1], r[0]); p.nombre = r[2]; p.sesion = r[5]; p.estaca = r[6]; p.modalidad = r[8]; });
-  filas_("Avance").forEach((r) => { const p = persona(r[3], r[1], r[0]); p.nombre = p.nombre || r[2]; p.secciones[r[6]] = r[7] === "Sí"; });
+  filas_("Avance").forEach((r) => {
+    const p = persona(r[3], r[1], r[0]); p.nombre = p.nombre || r[2];
+    if (!String(r[6]).startsWith("Baile practicado")) p.secciones[r[6]] = r[7] === "Sí";
+  });
+  filas_("Finalizados").forEach((r) => { const p = persona(r[3], r[1], r[0]); p.nombre = p.nombre || r[2]; p.finalizo = true; });
   filas_("Repasos").forEach((r) => { const p = persona(r[3], r[1], r[0]); p.nombre = p.nombre || r[2]; p.repasos[r[6]] = [r[7], r[8]]; });
 
   const salida = Object.values(personas).map((p) => {
@@ -215,7 +222,7 @@ function actualizarResumen() {
     let ok = 0, tot = 0;
     Object.values(p.repasos).forEach(([a, b]) => { ok += Number(a); tot += Number(b); });
     const pct = total ? hechas / total : 0;
-    const estado = pct >= 1 ? "Completó la parte en línea" : (hechas ? "En curso" : "Solo registrado");
+    const estado = p.finalizo ? "Finalizó y envió" : (pct >= 1 ? "Completó, falta enviar" : (hechas ? "En curso" : "Solo registrado"));
     return [p.sesion, p.estaca, p.nombre, p.correo, p.modalidad, p.cap, hechas, total, pct, tot ? ok + "/" + tot : "", p.ultima, estado];
   }).sort((a, b) => (a[0] + a[1] + a[2]).localeCompare(b[0] + b[1] + b[2]));
 
