@@ -1,0 +1,102 @@
+{
+  "_nota": "Contenido por defecto de la capacitación. Cuando el panel de Google Sheets esté conectado, lo que se escriba allí reemplaza estos datos.",
+  "modulos": [
+    { "n": 1, "titulo": "Bienvenida y ¿qué es PFJ?" },
+    { "n": 2, "titulo": "El día lunes" },
+    { "n": 3, "titulo": "El día martes y el baile" },
+    { "n": 4, "titulo": "Talleres y mensaje final" }
+  ],
+  "estacas": {
+    "Chile": {
+      "Antofagasta Norte": ["Estaca de Alto Hospicio Chile", "Estaca Arica Chile Costanera", "Estaca de Arica Chile Los Olivos", "Estaca de Iquique Chile"],
+      "Antofagasta Sur": ["Estaca de Antofagasta Chile", "Estaca de Antofagasta Chile Este", "Estaca de Antofagasta Chile La Portada", "Estaca de Calama Chile"],
+      "La Serena": ["Estaca de Copiapó Chile", "Estaca Coquimbo Chile", "Distrito de Illapel Chile", "Estaca La Serena Chile", "Distrito de Ovalle Chile", "Distrito de Vallenar Chile", "Misión Chile La Serena"],
+      "Viña del Mar": ["Estaca de El Belloto Chile", "Estaca de Quillota Chile", "Estaca de Quilpué Chile", "Estaca de Valparaíso Chile", "Estaca de Valparaíso Chile Oeste", "Estaca de Villa Alemana Chile", "Estaca de Villa Alemana Chile Oeste", "Estaca de Viña del Mar Chile", "Estaca de Viña del Mar Chile Achupallas", "Misión Chile Viña del Mar"],
+      "Santiago Norte": ["Estaca Aconcagua Chile", "Estaca de Colina Chile", "Estaca de Santiago Chile Conchalí", "Estaca de Santiago Chile Huelén", "Estaca de Santiago Chile Independencia", "Estaca de Santiago Chile Quilicura", "Estaca de Santiago Chile Renca", "Estaca de Santiago Chile San Pablo", "Estaca de Santiago Chile Zapadores", "Misión Chile Santiago Norte"],
+      "Santiago Este": ["Estaca de Santiago Chile Alicahue", "Estaca de Santiago Chile Cordillera", "Estaca de Santiago Chile Gabriela", "Estaca de Santiago Chile Javiera Carrera", "Estaca de Santiago Chile La Florida", "Estaca de Santiago Chile La Reina", "Estaca de Santiago Chile Las Condes", "Estaca de Santiago Chile Ñuñoa", "Estaca de Santiago Chile Puente Alto", "Estaca de Santiago Chile Vicuña Mackenna"],
+      "Santiago Oeste": ["Estaca de Peñaflor Chile", "Estaca de San Antonio Chile", "Estaca de Santiago Chile Cinco de Abril", "Estaca de Santiago Chile Los Cerrillos", "Estaca de Santiago Chile Maipú", "Estaca de Santiago Chile Ochagavía", "Estaca de Santiago Chile Olimpo", "Estaca de Santiago Chile República", "Estaca Talagante Chile"],
+      "Santiago Sur": ["Estaca Buín Chile", "Estaca de Santiago Chile La Cisterna", "Estaca de Santiago Chile Los Alerces", "Estaca de Santiago Chile Los Aviadores", "Estaca de Santiago Chile San Bernardo", "Estaca de Santiago Chile San Miguel"],
+      "Rancagua": ["Estaca de Curicó Chile", "Estaca de Rancagua Chile", "Estaca de Rancagua Chile Tupahue", "Distrito de San Fernando Chile", "Distrito de Santa Cruz Chile", "Estaca de Talca Chile"],
+      "Concepción": ["Estaca de Chillán Chile", "Estaca de Chillán Chile Ñuble", "Estaca de Concepción Chile", "Estaca de Concepción Chile Andalién", "Estaca de Concepción Chile Chiguayante", "Estaca de Hualpén Chile", "Estaca de Linares Chile", "Estaca de Penco Chile", "Estaca de Talcahuano Chile Norte", "Misión Chile Concepción"],
+      "Concepción Sur": ["Estaca de Angol Chile", "Estaca de Arauco Chile", "Estaca de Los Ángeles Chile Norte", "Estaca de Los Ángeles Chile Sur", "Estaca de San Pedro Chile", "Estaca de Temuco Chile Cautín", "Estaca de Temuco Chile Ñielol", "Distrito de Victoria Chile", "Distrito de Villarrica Chile"],
+      "Puerto Montt Norte": ["Distrito de Chiloé Chile", "Estaca de Osorno Chile", "Estaca de Osorno Chile Rahue", "Estaca de Valdivia Chile", "Estaca de Valdivia Chile Calle Calle"],
+      "Puerto Montt Sur": ["Distrito de Coyhaique Chile", "Estaca de Puerto Montt Chile", "Estaca de Puerto Varas Chile", "Estaca de Punta Arenas Chile", "Misión Chile Puerto Montt"]
+    },
+    "Argentina": {
+      "Bahía Blanca 1": ["Estaca Bahía Blanca Argentina", "Estaca Bahía Blanca Argentina Villa Mitre", "Estaca Santa Rosa Argentina", "Distrito Viedma Argentina", "Misión Argentina Bahía Blanca"],
+      "Bahía Blanca 2": ["Estaca Mar del Plata Argentina", "Estaca Mar del Plata Argentina Norte", "Distrito Necochea Argentina", "Estaca Olavarría Argentina"],
+      "Buenos Aires Este": ["Estaca Florencio Varela Argentina", "Distrito La Costa Argentina", "Estaca La Plata Argentina", "Estaca La Plata Argentina Este", "Estaca La Plata Argentina Sur"],
+      "Buenos Aires Norte 1": ["Estaca Buenos Aires Argentina Belgrano", "Estaca Buenos Aires Argentina Chacabuco", "Estaca Buenos Aires Argentina Congreso", "Estaca Buenos Aires Argentina Liniers", "Estaca Buenos Aires Argentina Norte", "Misión Argentina Buenos Aires Norte"],
+      "Buenos Aires Norte 2": ["Estaca Buenos Aires Argentina Escobar", "Estaca Buenos Aires Argentina Litoral", "Estaca Buenos Aires Argentina Pilar", "Estaca Buenos Aires Argentina Sarmiento", "Estaca Zárate Argentina"],
+      "Buenos Aires Oeste 1": ["Distrito Chivilcoy Argentina", "Estaca Buenos Aires Argentina Marcos Paz", "Estaca Buenos Aires Argentina Moreno", "Estaca Luján Argentina"],
+      "Buenos Aires Oeste 2": ["Estaca Buenos Aires Argentina Caseros", "Estaca Buenos Aires Argentina Castelar", "Estaca Buenos Aires Argentina Merlo", "Estaca Buenos Aires Argentina Ramos Mejía"],
+      "Buenos Aires Sur": ["Estaca Buenos Aires Argentina Adrogué", "Estaca Buenos Aires Argentina Banfield", "Estaca Buenos Aires Argentina Longchamps", "Estaca Buenos Aires Argentina Monte Grande"],
+      "Buenos Aires Sureste": ["Estaca Buenos Aires Argentina Aldo Bonzi", "Estaca Buenos Aires Argentina Avellaneda", "Estaca Buenos Aires Argentina González Catán", "Estaca Quilmes Argentina"],
+      "Comodoro Rivadavia": ["Distrito Caleta Olivia Argentina", "Estaca Comodoro Rivadavia Argentina", "Distrito Río Gallegos Argentina", "Estaca Tierra del Fuego Argentina", "Estaca Trelew Argentina Norte", "Estaca Trelew Argentina Sur"],
+      "Córdoba 1": ["Estaca Bell Ville Argentina", "Estaca Córdoba Argentina Este", "Estaca Córdoba Argentina Oeste", "Distrito Punilla Argentina", "Estaca Río Cuarto Argentina", "Misión Argentina Córdoba"],
+      "Córdoba 2": ["Estaca Córdoba Argentina Chacabuco", "Estaca Córdoba Argentina Patricios", "Estaca Córdoba Argentina Sierras", "Estaca Córdoba Argentina Sur"],
+      "Jujuy": ["Estaca Jujuy Argentina", "Distrito Orán Argentina", "Distrito San Pedro Argentina Jujuy", "Distrito Tartagal Argentina", "Misión Argentina Salta"],
+      "Neuquén 1": ["Estaca Bariloche Argentina", "Distrito Esquel Argentina", "Estaca General Roca Argentina"],
+      "Neuquén 2": ["Estaca Neuquén Argentina", "Estaca Neuquén Argentina Oeste", "Estaca Zapala Argentina"],
+      "Resistencia 1": ["Estaca Formosa Argentina", "Distrito Ibarreta Argentina", "Estaca Resistencia Argentina", "Estaca Resistencia Argentina Sur", "Distrito Roque Sáenz Peña Argentina"],
+      "Resistencia 2": ["Distrito Apóstoles Argentina", "Estaca Corrientes Argentina", "Distrito Eldorado Argentina", "Distrito Paso de los Libres Argentina", "Estaca Posadas Argentina"],
+      "Rosario": ["Estaca Pergamino Argentina", "Estaca Rosario Argentina", "Estaca Rosario Argentina Norte", "Estaca Rosario Argentina Oeste", "Estaca San Nicolás Argentina", "Distrito Venado Tuerto Argentina"],
+      "Salta": ["Estaca Salta Argentina", "Estaca Salta Argentina Oeste", "Misión Argentina Salta"],
+      "Santa Fe": ["Distrito Concordia Argentina", "Distrito La Paz Argentina", "Estaca Paraná Argentina", "Distrito Rafaela Argentina", "Distrito Reconquista Argentina", "Estaca Santa Fe Argentina", "Estaca Santa Fe Argentina Norte"],
+      "Santiago del Estero": ["Distrito Concepción Argentina", "Estaca La Rioja Argentina", "Estaca Santiago del Estero Argentina", "Misión Argentina Tucumán"],
+      "Tucumán": ["Distrito Metán Argentina", "Estaca Tucumán Argentina", "Estaca Tucumán Argentina Oeste"]
+    },
+    "Uruguay": {
+      "Centro": ["Estaca Durazno Uruguay", "Distrito Florida Uruguay", "Estaca Las Piedras Uruguay", "Estaca Maldonado Uruguay", "Estaca Melo Uruguay", "Estaca Montevideo Uruguay Cerro", "Estaca Treinta y Tres Uruguay"],
+      "Este": ["Distrito Colonia Uruguay", "Estaca De La Costa Uruguay", "Estaca Montevideo Uruguay Este", "Estaca Montevideo Uruguay Maroñas", "Estaca Rivera Uruguay", "Estaca Tacuarembó Uruguay"],
+      "Oeste": ["Estaca Artigas Uruguay", "Estaca Mercedes Uruguay", "Estaca Montevideo Uruguay Flores", "Estaca Montevideo Uruguay Norte", "Estaca Montevideo Uruguay Oeste", "Estaca Paysandú Uruguay", "Estaca Salto Uruguay"]
+    },
+    "Paraguay": {
+      "Asunción": ["Distrito Caacupé Paraguay", "Estaca Ciudad del Este Paraguay", "Estaca Fernando de la Mora Paraguay", "Estaca Fernando de la Mora Sur Paraguay", "Distrito Pilar Paraguay", "Estaca San Lorenzo Paraguay", "Estaca Ñemby Paraguay"],
+      "Asunción Norte": ["Estaca Asunción Paraguay", "Estaca Asunción Paraguay Norte", "Distrito Concepción Paraguay", "Distrito La Paloma Paraguay", "Estaca Limpio Paraguay", "Estaca Luque Sur Paraguay"],
+      "Asunción y Asunción Norte": ["Distrito Boquerón Paraguay", "Distrito Caaguazú Paraguay", "Estaca Capiatá Paraguay", "Distrito Encarnación Paraguay", "Estaca Luque Paraguay", "Distrito Paraguarí Paraguay", "Distrito Pedro Juan Caballero Paraguay"]
+    }
+  },
+  "videos": [
+    { "clave": "bienvenida-general", "modulo": "Portada", "lugar": "Video grande de la página de inicio", "titulo": "Regocíjate en Cristo", "enlace": "", "sesion": "" },
+    { "clave": "bienvenida-renlund", "modulo": "1", "lugar": "Introducción", "titulo": "Bienvenidos a PFJ", "enlace": "", "sesion": "" },
+    { "clave": "pensamiento-espiritual", "modulo": "1", "lugar": "Introducción · pensamiento espiritual", "titulo": "“En sus asuntos”", "enlace": "", "sesion": "" },
+    { "clave": "linea-autoridad", "modulo": "1", "lugar": "¿Qué es PFJ? · estructura de liderazgo", "titulo": "La línea de autoridad", "enlace": "", "sesion": "" },
+    { "clave": "adelanto-semana", "modulo": "1", "lugar": "¿Qué es PFJ? · adelanto de la semana", "titulo": "¿Qué sucede en PFJ?", "enlace": "", "sesion": "" },
+    { "clave": "consejero", "modulo": "2", "lugar": "Llegada y Reúnete con tu consejero", "titulo": "Reúnete con tu consejero", "enlace": "", "sesion": "" },
+    { "clave": "compania", "modulo": "2", "lugar": "Compañía y orientación", "titulo": "Reúnete con tu compañía", "enlace": "", "sesion": "" },
+    { "clave": "noche-de-hogar", "modulo": "2", "lugar": "Noche de hogar y metas", "titulo": "Lección, juegos y metas", "enlace": "", "sesion": "" },
+    { "clave": "taller-inclusion", "modulo": "2", "lugar": "Taller: Inclusión durante el check-in", "titulo": "Taller 1: Inclusión durante el check-in", "enlace": "", "sesion": "" },
+    { "clave": "estandartes", "modulo": "3", "lugar": "Actividades del día martes", "titulo": "Estandartes y versos cantados", "enlace": "", "sesion": "" },
+    { "clave": "baile", "modulo": "3", "lugar": "Baile en línea", "titulo": "Baile en línea: paso a paso", "enlace": "", "sesion": "" },
+    { "clave": "ensenar-jovenes", "modulo": "4", "lugar": "Talleres para consejeros", "titulo": "Sugerencias para enseñar a los jóvenes", "enlace": "", "sesion": "" },
+    { "clave": "vestimenta", "modulo": "4", "lugar": "Talleres para consejeros", "titulo": "Principios de vestimenta y apariencia", "enlace": "", "sesion": "" },
+    { "clave": "tiempo-libre", "modulo": "4", "lugar": "Talleres para consejeros", "titulo": "Tiempo libre de consejeros", "enlace": "", "sesion": "" },
+    { "clave": "mensaje-final", "modulo": "4", "lugar": "Mensaje final", "titulo": "Mensaje final: Regocíjate en Cristo", "enlace": "", "sesion": "" }
+  ],
+  "fotos": [],
+  "infoSesiones": [],
+  "preguntas": [
+    { "modulo": 1, "pregunta": "¿Cuál es el lema de las conferencias PFJ 2027?", "opciones": ["Anda conmigo", "Regocíjate en Cristo", "Allegaos a mí"], "correcta": 1, "explicacion": "“Regocijaos en el Señor siempre” (Filipenses 4:4)." },
+    { "modulo": 1, "pregunta": "¿Las capacitaciones para consejeros abarcan todas las actividades de la conferencia?", "opciones": ["Sí, no hace falta estudiar nada más", "No: el llamamiento de consejero implica el estudio personal de los manuales", "Solo las actividades del día lunes"], "correcta": 1, "explicacion": "Las capacitaciones no abarcan todo: tu llamamiento implica el estudio personal de los manuales de PFJ." },
+    { "modulo": 1, "pregunta": "Un joven de tu compañía tiene un problema que tú no puedes resolver. ¿Qué haces primero?", "opciones": ["Llamo directamente al Setenta de Área", "Acudo a quien está directamente sobre mí en la línea de autoridad", "Le pido al joven que lo resuelva solo"], "correcta": 1, "explicacion": "Se sigue la línea de autoridad, empezando por quien está directamente sobre ti." },
+    { "modulo": 1, "pregunta": "Si haces esta capacitación en línea en lugar de la presencial, ¿qué más debes hacer?", "opciones": ["Nada más", "Asistir a la sesión recuperativa de tu sesión", "Repetir la capacitación el próximo año"], "correcta": 1, "explicacion": "La capacitación en línea se completa asistiendo a la sesión recuperativa." },
+
+    { "modulo": 2, "pregunta": "Si tienes una asignación durante la llegada de los participantes (check-in), debes…", "opciones": ["Presentarte ante el Coordinador Auxiliar a cargo 30 minutos antes", "Llegar junto con los participantes", "Esperar en el dormitorio a que te llamen"], "correcta": 0, "explicacion": "Preséntate 30 minutos antes ante el Coordinador Auxiliar a cargo." },
+    { "modulo": 2, "pregunta": "El Reúnete con tu consejero es una actividad de…", "opciones": ["Grupo", "Compañía", "Sesión"], "correcta": 0, "explicacion": "Es una actividad de grupo, no de compañía." },
+    { "modulo": 2, "pregunta": "¿Pueden los jóvenes ir solos a alguna parte durante la semana, por ejemplo al baño?", "opciones": ["Sí, si le avisan a su consejero", "No, los jóvenes no van solos a ninguna parte", "Solo los mayores de 16 años"], "correcta": 1, "explicacion": "Los jóvenes no van solos a ninguna parte." },
+    { "modulo": 2, "pregunta": "¿Cuál es el objetivo principal del Reúnete con tu compañía?", "opciones": ["Repasar las normas de conducta", "Que los jóvenes se conozcan entre ellos", "Ensayar el programa musical"], "correcta": 1, "explicacion": "Su objetivo principal es que los jóvenes se conozcan entre ellos." },
+    { "modulo": 2, "pregunta": "¿Quién elige el nombre de la compañía?", "opciones": ["Los participantes, por votación", "El Matrimonio Director", "Los consejeros"], "correcta": 2, "explicacion": "Los consejeros eligen el nombre y la escritura, y los comparten al final del Reúnete con tu compañía." },
+    { "modulo": 2, "pregunta": "En la noche de hogar, si el análisis de un juego está tomando mucho tiempo…", "opciones": ["Lo cortas y pasas al siguiente juego", "No lo apresuras: un solo juego puede ser suficiente", "Lo dejas para el día siguiente"], "correcta": 1, "explicacion": "No hay que apresurar el análisis; un solo juego puede ser suficiente." },
+    { "modulo": 2, "pregunta": "¿Qué modelo se usa para establecer metas en la noche de hogar?", "opciones": ["Un modelo para el crecimiento", "El horario comentado", "La guía de aplicación del Área"], "correcta": 0, "explicacion": "Se sigue “Un modelo para el crecimiento”." },
+    { "modulo": 2, "pregunta": "Durante el check-in notas que un joven necesita un apoyo que no estaba informado. ¿Qué haces?", "opciones": ["Lo resuelvo yo mismo con mi compañía", "Lo recibo con respeto y naturalidad, anoto su nombre y compañía e informo al Matrimonio Codirector", "Espero al final de la semana para comentarlo"], "correcta": 1, "explicacion": "Los consejeros no resuelven estas situaciones por sí mismos: informan al Matrimonio Codirector tan pronto como sea posible." },
+
+    { "modulo": 3, "pregunta": "Según el análisis sobre la reverencia, la reverencia es…", "opciones": ["Solo estar callado", "Una condición del ser, no solo estar callado", "Algo que se exige únicamente en la reunión de testimonios"], "correcta": 1, "explicacion": "La reverencia no es solo estar callado, sino una condición del ser." },
+    { "modulo": 3, "pregunta": "Al preparar estandartes y versos cantados, el consejero debe cuidar que…", "opciones": ["Su compañía gane a toda costa", "Haya una competencia alegre y unida, sin rivalidad entre compañías", "Los jóvenes no participen"], "correcta": 1, "explicacion": "Se busca una competencia alegre y unida, sin rivalidad entre compañías." },
+    { "modulo": 3, "pregunta": "Después de aprender el baile en línea con el video, ¿dónde lo volverás a practicar?", "opciones": ["En ningún otro lugar", "En la sesión recuperativa y en las siguientes capacitaciones", "Solo durante la semana de PFJ"], "correcta": 1, "explicacion": "Se practica de nuevo en la sesión recuperativa y en las siguientes capacitaciones." },
+
+    { "modulo": 4, "pregunta": "¿En qué manual se basa el taller Sugerencias para enseñar a los jóvenes?", "opciones": ["Predicad Mi Evangelio", "Enseñar a la manera del Salvador", "Manual General"], "correcta": 1, "explicacion": "Se basa en Enseñar a la manera del Salvador." },
+    { "modulo": 4, "pregunta": "¿Dónde están las instrucciones sobre el tiempo libre de los consejeros?", "opciones": ["En el punto 4 de la Guía de Aplicación al Área y en la página 4 del Manual para el Personal", "En el Manual para el Participante", "No hay instrucciones"], "correcta": 0, "explicacion": "Están en el punto 4 de la Guía de Aplicación al Área y en la página 4 del Manual para el Personal." },
+    { "modulo": 4, "pregunta": "¿Cuándo se considera completa tu capacitación en línea?", "opciones": ["Cuando veo el primer video", "Cuando termino todas las secciones y asisto a la sesión recuperativa", "Cuando me registro"], "correcta": 1, "explicacion": "Se completa al terminar todas las secciones y asistir a la sesión recuperativa." }
+  ]
+}

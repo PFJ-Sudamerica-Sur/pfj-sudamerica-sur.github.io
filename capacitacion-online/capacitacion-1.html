@@ -16,21 +16,22 @@
   </div>
 
   <div class="columna">
-    <p>¡Bienvenido a la primera capacitación en línea para consejeros! Este módulo comienza con una introducción espiritual, seguida de videos de capacitación sobre cada actividad de los días lunes y martes. En cada sección encontrarás las páginas del manual que debes estudiar, <b>tareas</b> para responder y un breve <b>repaso</b>. Invita a tu familia, tus amigos u otros consejeros de tu sesión a participar en las actividades prácticas.</p>
+    <p>¡Bienvenido a la primera capacitación en línea para consejeros! Está dividida en <b>4 módulos</b>. Cada módulo tiene videos, las páginas del manual que debes estudiar y, al final, un breve <b>repaso</b> de alternativas. Invita a tu familia, a tus amigos o a otros consejeros de tu sesión a participar en las actividades prácticas.</p>
     <p>Si haces esta capacitación en línea, además deberás asistir a la <a href="#sesion-recuperativa">sesión recuperativa</a> de tu sesión, donde repasaremos juntos todos los días.</p>
-    <p class="meta"><span class="etq">Tiempo estimado: 4 a 5 h</span><span class="etq">10 secciones</span><span class="etq">+ sesión recuperativa</span></p>
+    <p class="meta"><span class="etq">Tiempo estimado: 4 a 5 h</span><span class="etq">4 módulos</span><span class="etq">+ sesión recuperativa</span></p>
 
     <!-- Registro -->
     <section class="registro" id="registro">
       <h2>Antes de empezar</h2>
-      <p>Completa tus datos para que tu avance, tus repasos y tus tareas les lleguen a los coordinadores de tu sesión.</p>
+      <p>Completa tus datos para que tu avance y tus repasos les lleguen a los coordinadores de tu sesión.</p>
       <form id="reg-form">
         <div class="campos">
           <label>Nombre y apellido<input name="nombre" required autocomplete="name"></label>
           <label>Correo electrónico<input name="correo" type="email" required autocomplete="email"></label>
-          <label>Sesión PFJ<select name="sesion" id="reg-sesion" required><option value="">Elige tu sesión</option></select></label>
-          <label>Estaca<input name="estaca" required></label>
-          <label>¿Cómo haces esta capacitación?
+          <label>Sesión PFJ<select name="sesion" id="reg-sesion" required><option value="">Cargando sesiones…</option></select></label>
+          <label>Estaca<select name="estaca" id="reg-estaca" required disabled><option value="">Primero elige tu sesión</option></select></label>
+          <label class="campo-ancho" id="reg-estaca-otra-campo" hidden>Escribe el nombre de tu estaca<input name="estacaOtra" id="reg-estaca-otra" placeholder="Por ejemplo: Estaca de Santiago Chile Ñuñoa"></label>
+          <label class="campo-ancho">¿Cómo haces esta capacitación?
             <select name="modalidad" required>
               <option value="">Elige una opción</option>
               <option>En línea, en lugar de la presencial</option>
@@ -40,300 +41,277 @@
         <button class="boton-rojo" type="submit">Comenzar</button>
       </form>
       <p class="registro__saludo">Registrado como <b id="reg-nombre-saludo"></b>. <button type="button" id="reg-cambiar">Cambiar datos</button></p>
+      <div class="info-sesion" data-info-sesion="contacto"></div>
     </section>
 
-    <nav class="indice" aria-label="Contenido del módulo">
-      <p class="indice__titulo"><span>Contenido</span><span id="progreso-texto">0 de 10</span></p>
-      <ol id="indice-lista">
-        <li><a href="#introduccion">Introducción</a></li>
-        <li><a href="#que-es-pfj">¿Qué es PFJ?</a></li>
-        <li><a href="#lunes">Día lunes: llegada y consejero</a></li>
-        <li><a href="#lunes-2">Día lunes: compañía y orientación</a></li>
-        <li><a href="#noche-de-hogar">Día lunes: noche de hogar y metas</a></li>
-        <li><a href="#taller-1">Taller: Inclusión durante el check-in</a></li>
-        <li><a href="#baile">Baile en línea</a></li>
-        <li><a href="#martes">Actividades del día martes</a></li>
-        <li><a href="#talleres">Talleres para consejeros</a></li>
-        <li><a href="#mensaje-final">Reflexión y mensaje final</a></li>
-      </ol>
+    <!-- Índice por módulos -->
+    <nav class="indice" aria-label="Módulos de la capacitación">
+      <p class="indice__titulo"><span>Módulos</span><span id="progreso-texto"></span></p>
+      <div id="indice-modulos" class="indice-modulos"></div>
       <div class="barra"><span id="progreso-barra"></span></div>
     </nav>
 
-    <!-- 1 -->
-    <section class="seccion" id="introduccion" data-seccion>
-      <h2>Introducción</h2>
-      <div class="video">
-        <div class="poster"><div class="poster__texto">Bienvenidos<br>a PFJ</div><button class="reproducir" aria-label="Reproducir"></button></div>
-        <p class="video__pie"><b>Bienvenidos a PFJ</b><span>Un mensaje de bienvenida del élder y la hermana Renlund.</span></p>
-      </div>
-      <h3>Pensamiento espiritual</h3>
-      <p class="video__quien">Codirector de sesión · 10 min</p>
-      <p>El Codirector de tu sesión comparte un pensamiento espiritual basado en el mensaje <a href="#">“En sus asuntos”</a>, del élder Patrick Kearon, del Cuórum de los Doce Apóstoles.</p>
-      <div class="video">
-        <div class="poster"><div class="poster__texto">Pensamiento<br>espiritual</div><button class="reproducir" aria-label="Reproducir"></button></div>
-        <p class="video__pie"><b>“En sus asuntos”</b><span>Grabado por el Codirector de tu sesión.</span></p>
-      </div>
-      <h3>Lema 2027</h3>
-      <blockquote>“Regocijaos en el Señor siempre. Otra vez digo: ¡Regocijaos!” (<a href="https://www.churchofjesuschrist.org/study/scriptures/nt/philip/4?lang=spa&id=p4#p4" target="_blank" rel="noopener">Filipenses 4:4</a>).</blockquote>
-      <p>Las capacitaciones no abarcan todas las actividades de la conferencia. Tu llamamiento como consejero implica el estudio personal de los manuales de PFJ.</p>
-      <div class="tarea" data-tarea="intro-lema"><span class="tarea__etq">Tarea</span><p>Después de ver el pensamiento espiritual, escribe qué significa para ti “regocijarte en Cristo” y cómo quieres que los jóvenes de tu compañía lo sientan durante la semana.</p></div>
-      <div class="nota-staff"><b>Para el staff de sesión</b>Agreguen aquí la fecha y el lugar de su sesión, y el enlace al grupo de WhatsApp y al Classroom de consejeros.</div>
-      <label class="completar"><input type="checkbox"> Marcar como completado</label>
-    </section>
+    <!-- ================= MÓDULO 1 ================= -->
+    <div class="modulo" data-modulo="1" id="modulo-1">
+      <div class="modulo__cabecera"><span>Módulo 1</span><h2>Bienvenida y ¿qué es PFJ?</h2></div>
 
-    <!-- 2 -->
-    <section class="seccion" id="que-es-pfj" data-seccion>
-      <h2>¿Qué es PFJ?</h2>
-      <p>Esta sección presenta al staff de tu sesión, explica la línea de autoridad desde el Setenta de Área hasta los consejeros y te da un adelanto de toda la semana de la conferencia.</p>
-      <h3>Tu staff de sesión</h3>
-      <p class="video__quien">Matrimonio Director · 5 min</p>
-      <ul>
-        <li>Setenta que preside</li>
-        <li>Matrimonio Director</li>
-        <li>Matrimonio Codirector</li>
-        <li>Matrimonio de Logística</li>
-        <li>Coordinadores</li>
-        <li>Coordinadores Auxiliares</li>
-      </ul>
-      <div class="nota-staff"><b>Para el staff de sesión</b>Reemplacen esta lista por el organigrama de su sesión, con fotografías y nombres.</div>
-      <h3>Estructura de liderazgo</h3>
-      <p class="video__quien">Coordinadores · 10 min</p>
-      <div class="video">
-        <div class="poster"><div class="poster__texto">Del Setenta<br>al consejero</div><button class="reproducir" aria-label="Reproducir"></button></div>
-        <p class="video__pie"><b>La línea de autoridad</b><span>Los Coordinadores explican el canal correcto de comunicación durante la preparación y la semana de PFJ.</span></p>
-      </div>
-      <div class="video">
-        <div class="poster"><div class="poster__texto">Adelanto de<br>la semana</div><button class="reproducir" aria-label="Reproducir"></button></div>
-        <p class="video__pie"><b>¿Qué sucede en PFJ?</b><span>Un resumen de las actividades destacadas desde el día 0 al día 6.</span></p>
-      </div>
-      <div class="tarea" data-tarea="linea-autoridad"><span class="tarea__etq">Tarea</span><p>Durante la semana, un joven de tu compañía tiene un problema que tú no puedes resolver. Describe a quién acudirías primero y por qué, según la línea de autoridad.</p></div>
-      <div class="repaso" data-repaso="que-es-pfj"></div>
-      <label class="completar"><input type="checkbox"> Marcar como completado</label>
-    </section>
+      <section class="seccion" id="introduccion" data-seccion>
+        <h2>Introducción</h2>
+        <div class="video" data-video="bienvenida-renlund">
+          <div class="poster"><div class="poster__texto">Bienvenidos<br>a PFJ</div><button class="reproducir" aria-label="Reproducir"></button></div>
+          <p class="video__pie"><b>Bienvenidos a PFJ</b><span>Un mensaje de bienvenida del élder y la hermana Renlund.</span></p>
+        </div>
+        <h3>Pensamiento espiritual</h3>
+        <p class="video__quien">Codirector de sesión · 10 min</p>
+        <p>El Codirector de tu sesión comparte un pensamiento espiritual basado en el mensaje “En sus asuntos”, del élder Patrick Kearon, del Cuórum de los Doce Apóstoles.</p>
+        <div class="video" data-video="pensamiento-espiritual">
+          <div class="poster"><div class="poster__texto">Pensamiento<br>espiritual</div><button class="reproducir" aria-label="Reproducir"></button></div>
+          <p class="video__pie"><b>“En sus asuntos”</b><span>Grabado por el Codirector de tu sesión.</span></p>
+        </div>
+        <h3>Lema 2027</h3>
+        <blockquote>“Regocijaos en el Señor siempre. Otra vez digo: ¡Regocijaos!” (<a href="https://www.churchofjesuschrist.org/study/scriptures/nt/philip/4?lang=spa&id=p4#p4" target="_blank" rel="noopener">Filipenses 4:4</a>).</blockquote>
+        <p>Las capacitaciones no abarcan todas las actividades de la conferencia. Tu llamamiento como consejero implica el estudio personal de los manuales de PFJ.</p>
+        <label class="completar"><input type="checkbox"> Marcar como completado</label>
+      </section>
 
-    <!-- 3 -->
-    <section class="seccion" id="lunes" data-seccion>
-      <h2>Día lunes: llegada y consejero</h2>
-      <p class="meta"><span class="etq">Coordinadores Auxiliares</span></p>
+      <section class="seccion" id="que-es-pfj" data-seccion>
+        <h2>¿Qué es PFJ?</h2>
+        <p>Esta sección presenta al staff de tu sesión, explica la línea de autoridad desde el Setenta de Área hasta los consejeros y te da un adelanto de toda la semana de la conferencia.</p>
+        <h3>Tu staff de sesión</h3>
+        <div id="staff-sesion" class="staff">
+          <ul>
+            <li>Setenta que preside</li>
+            <li>Matrimonio Director</li>
+            <li>Matrimonio Codirector</li>
+            <li>Matrimonio de Logística</li>
+            <li>Coordinadores</li>
+            <li>Coordinadores Auxiliares</li>
+          </ul>
+        </div>
+        <h3>Estructura de liderazgo</h3>
+        <p class="video__quien">Coordinadores · 10 min</p>
+        <div class="video" data-video="linea-autoridad">
+          <div class="poster"><div class="poster__texto">Del Setenta<br>al consejero</div><button class="reproducir" aria-label="Reproducir"></button></div>
+          <p class="video__pie"><b>La línea de autoridad</b><span>Los Coordinadores explican el canal correcto de comunicación durante la preparación y la semana de PFJ.</span></p>
+        </div>
+        <div class="video" data-video="adelanto-semana">
+          <div class="poster"><div class="poster__texto">Adelanto de<br>la semana</div><button class="reproducir" aria-label="Reproducir"></button></div>
+          <p class="video__pie"><b>¿Qué sucede en PFJ?</b><span>Un resumen de las actividades destacadas desde el día 0 al día 6.</span></p>
+        </div>
+        <label class="completar"><input type="checkbox"> Marcar como completado</label>
+      </section>
 
-      <h3>Check-in</h3>
-      <p>El propósito del check-in es darle a cada participante una bienvenida positiva y amigable, más allá de la logística. Si te dan una asignación durante la llegada, preséntate ante el Coordinador Auxiliar a cargo 30 minutos antes de que comience.</p>
-      <p class="lee"><b>Lee:</b> Manual para el Personal, página 24.</p>
-      <div class="tarea" data-tarea="checkin"><span class="tarea__etq">Tarea</span><p>Enumera y explica brevemente lo que se espera del consejero durante el check-in, y escribe un par de ideas específicas que tienes para cumplir con ello.</p></div>
+      <div class="repaso" data-modulo-repaso="1"></div>
+      <div class="modulo__nav"></div>
+    </div>
 
-      <h3>Reúnete con tu consejero</h3>
-      <div class="video">
-        <div class="poster"><div class="poster__texto">Reúnete con<br>tu consejero</div><button class="reproducir" aria-label="Reproducir"></button></div>
-        <p class="video__pie"><b>Reúnete con tu consejero</b><span>Una actividad de grupo, no de compañía.</span></p>
-      </div>
-      <ul>
-        <li>Su propósito es establecer conexiones con los participantes y ayudarlos a captar la visión de la conferencia.</li>
-        <li>Repasa con los jóvenes las normas de Conducta en las actividades de la Iglesia.</li>
-        <li>Guía a los participantes a comprometerse siguiendo las “Explicaciones de la lista de verificación”.</li>
-        <li>Aquí se dan las asignaciones de los devocionales matutinos de toda la semana.</li>
-      </ul>
-      <p class="lee"><b>Lee:</b> Manual para el Personal, páginas 2–3 y 25–28; Manual para el Participante, página 10.</p>
-      <p><b>ACTIVIDAD:</b> con un familiar o amigo, simula la conversación de la lista de verificación como lo harías con un participante.</p>
-      <div class="tarea" data-tarea="consejero-importancia"><span class="tarea__etq">Tarea</span><p>¿Por qué crees que el Reúnete con tu consejero es una de las actividades más importantes de la semana? ¿Cómo pueden estos minutos marcar el resto de PFJ?</p></div>
-      <div class="tarea" data-tarea="actividades-prohibidas"><span class="tarea__etq">Tarea</span><p>Enumera y explica brevemente las actividades prohibidas de las normas de Conducta en las actividades de la Iglesia (Manual para el Personal, páginas 2–3).</p></div>
-      <div class="repaso" data-repaso="lunes"></div>
-      <label class="completar"><input type="checkbox"> Marcar como completado</label>
-    </section>
+    <!-- ================= MÓDULO 2 ================= -->
+    <div class="modulo" data-modulo="2" id="modulo-2">
+      <div class="modulo__cabecera"><span>Módulo 2</span><h2>El día lunes</h2></div>
 
-    <!-- 4 -->
-    <section class="seccion" id="lunes-2" data-seccion>
-      <h2>Día lunes: compañía y orientación</h2>
-      <h3>Reúnete con tu compañía</h3>
-      <div class="video">
-        <div class="poster"><div class="poster__texto">Reúnete con<br>tu compañía</div><button class="reproducir" aria-label="Reproducir"></button></div>
-        <p class="video__pie"><b>Reúnete con tu compañía</b><span>El objetivo principal es que los jóvenes se conozcan entre ellos.</span></p>
-      </div>
-      <ul>
-        <li>Estudia con anticipación el discurso del élder Holland que se indica en el manual, para dirigir el análisis de la página 12 del Manual para el Participante.</li>
-        <li>La actividad comienza con juegos para conocerse.</li>
-        <li>Al final, los consejeros comparten con los jóvenes la escritura y el nombre de la compañía. <b>Los participantes no eligen el nombre: lo hacen sus consejeros.</b></li>
-      </ul>
-      <p class="lee"><b>Lee:</b> Manual para el Personal, páginas 29–31; Manual para el Participante, páginas 12–13; Guía de Aplicación al Área, sección 23.</p>
-      <div class="tarea" data-tarea="compania-analisis"><span class="tarea__etq">Tarea</span><p>Escribe una o dos ideas específicas sobre cómo ayudarás a tu compañía a seguir el análisis de las páginas 12–13 del Manual para el Participante.</p></div>
+      <section class="seccion" id="lunes" data-seccion>
+        <h2>Llegada y Reúnete con tu consejero</h2>
+        <p class="meta"><span class="etq">Coordinadores Auxiliares</span></p>
+        <h3>Check-in</h3>
+        <p>El propósito del check-in es darle a cada participante una bienvenida positiva y amigable, más allá de la logística. Si te dan una asignación durante la llegada, preséntate ante el Coordinador Auxiliar a cargo 30 minutos antes de que comience.</p>
+        <p class="lee"><b>Lee:</b> Manual para el Personal, página 24.</p>
+        <h3>Reúnete con tu consejero</h3>
+        <div class="video" data-video="consejero">
+          <div class="poster"><div class="poster__texto">Reúnete con<br>tu consejero</div><button class="reproducir" aria-label="Reproducir"></button></div>
+          <p class="video__pie"><b>Reúnete con tu consejero</b><span>Una actividad de grupo, no de compañía.</span></p>
+        </div>
+        <ul>
+          <li>Su propósito es establecer conexiones con los participantes y ayudarlos a captar la visión de la conferencia.</li>
+          <li>Repasa con los jóvenes las normas de Conducta en las actividades de la Iglesia.</li>
+          <li>Guía a los participantes a comprometerse siguiendo las “Explicaciones de la lista de verificación”.</li>
+          <li>Aquí se dan las asignaciones de los devocionales matutinos de toda la semana.</li>
+        </ul>
+        <p class="lee"><b>Lee:</b> Manual para el Personal, páginas 2–3 y 25–28; Manual para el Participante, página 10.</p>
+        <p><b>ACTIVIDAD:</b> con un familiar o amigo, simula la conversación de la lista de verificación como lo harías con un participante.</p>
+        <label class="completar"><input type="checkbox"> Marcar como completado</label>
+      </section>
 
-      <h3>Orientación</h3>
-      <p>Su objetivo es entusiasmar a los jóvenes y presentar al staff de sesión. Durante la orientación:</p>
-      <ul>
-        <li>Los participantes ven el video de bienvenida del élder y la hermana Caussé.</li>
-        <li>El Coordinador Auxiliar asignado explica el programa musical y anuncia horarios y lugares de ensayo.</li>
-        <li>Se anima a los jóvenes a participar del espectáculo de variedades.</li>
-        <li>Los consejeros bailan los bailes en línea.</li>
-      </ul>
-      <p class="lee"><b>Lee:</b> Manual para el Personal, páginas 31, 83, 96, 105 y 110.</p>
-      <div class="tarea" data-tarea="orientacion-entusiasmo"><span class="tarea__etq">Tarea</span><p>Escribe dos cosas concretas que harás durante la orientación para ayudar a los jóvenes de tu grupo a entusiasmarse con PFJ.</p></div>
-      <div class="repaso" data-repaso="lunes-2"></div>
-      <label class="completar"><input type="checkbox"> Marcar como completado</label>
-    </section>
+      <section class="seccion" id="lunes-2" data-seccion>
+        <h2>Compañía y orientación</h2>
+        <h3>Reúnete con tu compañía</h3>
+        <div class="video" data-video="compania">
+          <div class="poster"><div class="poster__texto">Reúnete con<br>tu compañía</div><button class="reproducir" aria-label="Reproducir"></button></div>
+          <p class="video__pie"><b>Reúnete con tu compañía</b><span>El objetivo principal es que los jóvenes se conozcan entre ellos.</span></p>
+        </div>
+        <ul>
+          <li>Estudia con anticipación el discurso del élder Holland que se indica en el manual, para dirigir el análisis de la página 12 del Manual para el Participante.</li>
+          <li>La actividad comienza con juegos para conocerse.</li>
+          <li>Al final, los consejeros comparten con los jóvenes la escritura y el nombre de la compañía. <b>Los participantes no eligen el nombre: lo hacen sus consejeros.</b></li>
+        </ul>
+        <p class="lee"><b>Lee:</b> Manual para el Personal, páginas 29–31; Manual para el Participante, páginas 12–13; Guía de Aplicación al Área, sección 23.</p>
+        <h3>Orientación</h3>
+        <p>Su objetivo es entusiasmar a los jóvenes y presentar al staff de sesión. Durante la orientación:</p>
+        <ul>
+          <li>Los participantes ven el video de bienvenida del élder y la hermana Caussé.</li>
+          <li>El Coordinador Auxiliar asignado explica el programa musical y anuncia horarios y lugares de ensayo.</li>
+          <li>Se anima a los jóvenes a participar del espectáculo de variedades.</li>
+          <li>Los consejeros bailan los bailes en línea.</li>
+        </ul>
+        <p class="lee"><b>Lee:</b> Manual para el Personal, páginas 31, 83, 96, 105 y 110.</p>
+        <label class="completar"><input type="checkbox"> Marcar como completado</label>
+      </section>
 
-    <!-- 5 -->
-    <section class="seccion" id="noche-de-hogar" data-seccion>
-      <h2>Día lunes: noche de hogar y metas</h2>
-      <div class="video">
-        <div class="poster"><div class="poster__texto">La noche<br>de hogar</div><button class="reproducir" aria-label="Reproducir"></button></div>
-        <p class="video__pie"><b>Lección, juegos y metas</b><span>Siguiendo “Un modelo para el crecimiento”.</span></p>
-      </div>
-      <p>La noche de hogar incluye una lección, juegos y el establecimiento de metas. Los juegos se hacen por compañía; si el análisis de un juego toma demasiado tiempo, no lo apresures: un solo juego puede ser suficiente.</p>
-      <p class="lee"><b>Lee:</b> Manual para el Personal, páginas 32–37.</p>
-      <p><b>ACTIVIDAD:</b> juega uno o dos de los juegos de la noche de hogar con tu familia o amigos y dirige después un breve análisis. Luego fija una meta personal siguiendo “Un modelo para el crecimiento”. ¡Y no olvides el postre!</p>
-      <div class="tarea" data-tarea="juegos-ensenanzas"><span class="tarea__etq">Tarea</span><p>Enumera los juegos de la noche de hogar (solo el nombre) y, al lado de cada uno, escribe una o dos enseñanzas que se pueden sacar de él.</p></div>
-      <div class="tarea" data-tarea="juegos-analisis"><span class="tarea__etq">Tarea</span><p>Cuenta cómo te fue con el juego que hiciste en casa: ¿qué preguntas usaste para el análisis y qué aprendieron?</p></div>
-      <div class="tarea" data-tarea="metas-modelo"><span class="tarea__etq">Tarea</span><p>Escribe la meta que fijaste con “Un modelo para el crecimiento” y explica cómo este modelo puede ayudar a los jóvenes a establecer metas y alcanzarlas.</p></div>
-      <div class="tarea" data-tarea="metas-seguimiento"><span class="tarea__etq">Tarea</span><p>¿Qué cosas específicas harás durante la semana de PFJ para dar seguimiento a las metas personales de cada participante y a las metas de la compañía?</p></div>
-      <div class="repaso" data-repaso="noche-de-hogar"></div>
-      <label class="completar"><input type="checkbox"> Marcar como completado</label>
-    </section>
+      <section class="seccion" id="noche-de-hogar" data-seccion>
+        <h2>Noche de hogar y metas</h2>
+        <div class="video" data-video="noche-de-hogar">
+          <div class="poster"><div class="poster__texto">La noche<br>de hogar</div><button class="reproducir" aria-label="Reproducir"></button></div>
+          <p class="video__pie"><b>Lección, juegos y metas</b><span>Siguiendo “Un modelo para el crecimiento”.</span></p>
+        </div>
+        <p>La noche de hogar incluye una lección, juegos y el establecimiento de metas. Los juegos se hacen por compañía; si el análisis de un juego toma demasiado tiempo, no lo apresures: un solo juego puede ser suficiente.</p>
+        <p class="lee"><b>Lee:</b> Manual para el Personal, páginas 32–37.</p>
+        <p><b>ACTIVIDAD:</b> juega uno o dos de los juegos de la noche de hogar con tu familia o amigos y dirige después un breve análisis. Luego fija una meta personal siguiendo “Un modelo para el crecimiento”. ¡Y no olvides el postre!</p>
+        <label class="completar"><input type="checkbox"> Marcar como completado</label>
+      </section>
 
-    <!-- 6 -->
-    <section class="seccion" id="taller-1" data-seccion>
-      <h2>Taller: Inclusión durante el check-in</h2>
-      <p class="meta"><span class="etq">10 min</span><span class="etq">Matrimonio Codirector</span></p>
-      <div class="video">
-        <div class="poster"><div class="poster__texto">Inclusión<br>en el check-in</div><button class="reproducir" aria-label="Reproducir"></button></div>
-        <p class="video__pie"><b>Taller 1</b><span>Impartido por el Matrimonio Codirector de tu sesión, encargado de Inclusión.</span></p>
-      </div>
-      <h3>Objetivo</h3>
-      <p>Brindar a los consejeros criterios básicos para identificar situaciones que puedan requerir apoyo adicional durante el check-in, comprendiendo qué observar, cómo responder adecuadamente y cuándo comunicar la situación al Matrimonio Codirector.</p>
-      <h3>Situaciones no informadas durante el check-in</h3>
-      <p>Durante el proceso de check-in pueden presentarse jóvenes que requieran algún tipo de apoyo o acompañamiento especial y cuya situación no haya sido comunicada previamente al Matrimonio Codirector, encargado de Inclusión.</p>
-      <p>En estos casos, los consejeros deberán estar atentos a posibles necesidades o circunstancias relevantes, registrar la información pertinente y comunicarla oportunamente al Matrimonio Codirector para su evaluación y seguimiento.</p>
-      <p>Es posible que algunos jóvenes no figuren en la lista de Inclusión elaborada antes del inicio de PFJ por el Matrimonio Codirector. Sin embargo, esto no necesariamente significa que no requieran apoyo o consideraciones especiales.</p>
-      <p>Por este motivo, es fundamental que cualquier situación identificada durante el check-in o a lo largo del día lunes sea comunicada oportunamente al Matrimonio Codirector, a fin de que pueda evaluarse y brindarse el acompañamiento correspondiente.</p>
-      <h3>Logística de check-in</h3>
-      <p>El Matrimonio Codirector, en su función de encargado de Inclusión, estará ubicado en la mesa de check-in con el listado de participantes que hayan informado previamente alguna condición, necesidad o circunstancia que requiera atención especial. Su función será corroborar la llegada de estos jóvenes y registrar cualquier situación que se identifique durante el proceso y que no haya sido comunicada con anterioridad.</p>
-      <h3>¿Qué situaciones podrían observarse?</h3>
-      <p>A modo de ejemplo, podrían presentarse jóvenes que:</p>
-      <ul>
-        <li>Tengan alguna discapacidad visible o manifiesten necesitar apoyos específicos.</li>
-        <li>Presenten una condición del neurodesarrollo, como autismo.</li>
-        <li>Comuniquen, o los mismos consejeros observen, alguna situación relacionada con su identidad de género, por ejemplo, que soliciten ser identificados con un nombre distinto al correspondiente a su sexo biológico o que su apariencia y expresión de género no coincidan con este.</li>
-        <li>Informen una condición médica o de salud que requiera consideraciones especiales, incluyendo el uso de medicación psiquiátrica.</li>
-      </ul>
-      <h3>¿Qué deben hacer los consejeros?</h3>
-      <p>Ante cualquiera de estas situaciones, los consejeros deben:</p>
-      <ul>
-        <li>Recibir al joven con respeto, empatía y naturalidad.</li>
-        <li>Tomar nota de su nombre y de la compañía asignada.</li>
-        <li>Informar la situación al Matrimonio Codirector tan pronto como sea posible.</li>
-      </ul>
-      <p>No corresponde que los consejeros intenten resolver estas situaciones por sí mismos. El Matrimonio Codirector será responsable de evaluar cada caso y determinar la mejor manera de brindar el acompañamiento y los apoyos que pudieran ser necesarios.</p>
-      <h3>Un mismo criterio para todos</h3>
-      <p>Si durante las capacitaciones surgen dudas sobre cómo proceder ante una situación particular, se seguirá el siguiente procedimiento:</p>
-      <ul>
-        <li>Los consejeros enviarán sus consultas al grupo de WhatsApp de su sesión.</li>
-        <li>El Matrimonio Codirector recibirá orientación por parte del Equipo de Inclusión del Área para responder dichas consultas. De esta manera, se procura que todas las situaciones sean abordadas con criterios uniformes y consistentes.</li>
-      </ul>
-      <h3>Mensaje final</h3>
-      <p>El objetivo no es que los consejeros sean especialistas en Inclusión. Su función es estar atentos a las necesidades de los jóvenes, recibir a cada uno con respeto y naturalidad, y comunicar oportunamente aquellas situaciones que puedan requerir acompañamiento o apoyo adicional.</p>
-      <p>El Matrimonio Codirector estará disponible durante toda la semana de PFJ para brindar orientación y apoyo a los consejeros, quienes acompañan de manera directa a los jóvenes dentro de sus compañías.</p>
-      <div class="repaso" data-repaso="taller-1"></div>
-      <div class="nota-staff"><b>Para el staff de sesión</b>Al terminar este módulo, el Matrimonio Codirector comparte en el grupo de consejeros el Kit de Primeros Auxilios sobre Salud Mental.</div>
-      <label class="completar"><input type="checkbox"> Marcar como completado</label>
-    </section>
+      <section class="seccion" id="taller-1" data-seccion>
+        <h2>Taller: Inclusión durante el check-in</h2>
+        <p class="meta"><span class="etq">10 min</span><span class="etq">Matrimonio Codirector</span></p>
+        <div class="video" data-video="taller-inclusion">
+          <div class="poster"><div class="poster__texto">Inclusión<br>en el check-in</div><button class="reproducir" aria-label="Reproducir"></button></div>
+          <p class="video__pie"><b>Taller 1</b><span>Impartido por el Matrimonio Codirector de tu sesión, encargado de Inclusión.</span></p>
+        </div>
+        <h3>Objetivo</h3>
+        <p>Brindar a los consejeros criterios básicos para identificar situaciones que puedan requerir apoyo adicional durante el check-in, comprendiendo qué observar, cómo responder adecuadamente y cuándo comunicar la situación al Matrimonio Codirector.</p>
+        <h3>Situaciones no informadas durante el check-in</h3>
+        <p>Durante el proceso de check-in pueden presentarse jóvenes que requieran algún tipo de apoyo o acompañamiento especial y cuya situación no haya sido comunicada previamente al Matrimonio Codirector, encargado de Inclusión.</p>
+        <p>En estos casos, los consejeros deberán estar atentos a posibles necesidades o circunstancias relevantes, registrar la información pertinente y comunicarla oportunamente al Matrimonio Codirector para su evaluación y seguimiento.</p>
+        <p>Es posible que algunos jóvenes no figuren en la lista de Inclusión elaborada antes del inicio de PFJ por el Matrimonio Codirector. Sin embargo, esto no necesariamente significa que no requieran apoyo o consideraciones especiales.</p>
+        <p>Por este motivo, es fundamental que cualquier situación identificada durante el check-in o a lo largo del día lunes sea comunicada oportunamente al Matrimonio Codirector, a fin de que pueda evaluarse y brindarse el acompañamiento correspondiente.</p>
+        <h3>Logística de check-in</h3>
+        <p>El Matrimonio Codirector, en su función de encargado de Inclusión, estará ubicado en la mesa de check-in con el listado de participantes que hayan informado previamente alguna condición, necesidad o circunstancia que requiera atención especial. Su función será corroborar la llegada de estos jóvenes y registrar cualquier situación que se identifique durante el proceso y que no haya sido comunicada con anterioridad.</p>
+        <h3>¿Qué situaciones podrían observarse?</h3>
+        <p>A modo de ejemplo, podrían presentarse jóvenes que:</p>
+        <ul>
+          <li>Tengan alguna discapacidad visible o manifiesten necesitar apoyos específicos.</li>
+          <li>Presenten una condición del neurodesarrollo, como autismo.</li>
+          <li>Comuniquen, o los mismos consejeros observen, alguna situación relacionada con su identidad de género, por ejemplo, que soliciten ser identificados con un nombre distinto al correspondiente a su sexo biológico o que su apariencia y expresión de género no coincidan con este.</li>
+          <li>Informen una condición médica o de salud que requiera consideraciones especiales, incluyendo el uso de medicación psiquiátrica.</li>
+        </ul>
+        <h3>¿Qué deben hacer los consejeros?</h3>
+        <p>Ante cualquiera de estas situaciones, los consejeros deben:</p>
+        <ul>
+          <li>Recibir al joven con respeto, empatía y naturalidad.</li>
+          <li>Tomar nota de su nombre y de la compañía asignada.</li>
+          <li>Informar la situación al Matrimonio Codirector tan pronto como sea posible.</li>
+        </ul>
+        <p>No corresponde que los consejeros intenten resolver estas situaciones por sí mismos. El Matrimonio Codirector será responsable de evaluar cada caso y determinar la mejor manera de brindar el acompañamiento y los apoyos que pudieran ser necesarios.</p>
+        <h3>Un mismo criterio para todos</h3>
+        <p>Si durante las capacitaciones surgen dudas sobre cómo proceder ante una situación particular, se seguirá el siguiente procedimiento:</p>
+        <ul>
+          <li>Los consejeros enviarán sus consultas al grupo de WhatsApp de su sesión.</li>
+          <li>El Matrimonio Codirector recibirá orientación por parte del Equipo de Inclusión del Área para responder dichas consultas. De esta manera, se procura que todas las situaciones sean abordadas con criterios uniformes y consistentes.</li>
+        </ul>
+        <h3>Mensaje final</h3>
+        <p>El objetivo no es que los consejeros sean especialistas en Inclusión. Su función es estar atentos a las necesidades de los jóvenes, recibir a cada uno con respeto y naturalidad, y comunicar oportunamente aquellas situaciones que puedan requerir acompañamiento o apoyo adicional.</p>
+        <p>El Matrimonio Codirector estará disponible durante toda la semana de PFJ para brindar orientación y apoyo a los consejeros, quienes acompañan de manera directa a los jóvenes dentro de sus compañías.</p>
+        <label class="completar"><input type="checkbox"> Marcar como completado</label>
+      </section>
 
-    <!-- 7 -->
-    <section class="seccion" id="baile" data-seccion>
-      <h2>Baile en línea</h2>
-      <p class="meta"><span class="etq">10 min</span><span class="etq">Coordinador Auxiliar del baile</span></p>
-      <div class="video">
-        <div class="poster"><div class="poster__texto">Baile<br>en línea</div><button class="reproducir" aria-label="Reproducir"></button></div>
-        <p class="video__pie"><b>Paso a paso</b><span>El Coordinador Auxiliar encargado del baile te enseña cada paso.</span></p>
-      </div>
-      <p><b>ACTIVIDAD:</b> aprende el baile con el video y practícalo con alguien más. Lo volveremos a practicar juntos en la sesión recuperativa y en las siguientes capacitaciones. <a href="#">Descarga aquí la música y los videos del paso a paso.</a></p>
-      <div class="tarea" data-tarea="baile"><span class="tarea__etq">Tarea</span><p>Cuéntanos con quién practicaste el baile y qué parte te costó más. (Si quieres, comparte un video corto en el grupo de tu sesión.)</p></div>
-      <label class="completar"><input type="checkbox"> Marcar como completado</label>
-    </section>
+      <div class="repaso" data-modulo-repaso="2"></div>
+      <div class="modulo__nav"></div>
+    </div>
 
-    <!-- 8 -->
-    <section class="seccion" id="martes" data-seccion>
-      <h2>Actividades del día martes</h2>
-      <p class="meta"><span class="etq">Coordinadores Auxiliares</span></p>
-      <h3>Reverencia en la clase</h3>
-      <p>¿Cómo ayudar a los jóvenes a ser reverentes y a prestar atención? Puedes apoyarte en el Análisis sobre la reverencia y el testimonio del día jueves: la reverencia no es solo estar callado, sino una condición del ser.</p>
-      <p class="lee"><b>Lee:</b> Manual para el Personal, página 60; Manual para el Participante, página 80.</p>
-      <div class="tarea" data-tarea="reverencia"><span class="tarea__etq">Tarea</span><p>Escribe dos maneras concretas en que ayudarás a los jóvenes de tu grupo a ser reverentes y a prestar atención en las clases.</p></div>
-      <h3>Preparación de estandartes y versos cantados</h3>
-      <div class="video">
-        <div class="poster"><div class="poster__texto">Estandartes y<br>versos cantados</div><button class="reproducir" aria-label="Reproducir"></button></div>
-        <p class="video__pie"><b>Reglas de confección</b><span>Y cómo evitar la rivalidad entre compañías.</span></p>
-      </div>
-      <p class="lee"><b>Lee:</b> Manual para el Personal, página 47; Manual para el Participante, página 36.</p>
-      <div class="tarea" data-tarea="rivalidad"><span class="tarea__etq">Tarea</span><p>¿Cómo ayudarás a que tu compañía viva una competencia alegre y unida, sin rivalidad con las demás compañías?</p></div>
-      <h3>Comportamiento en los bailes</h3>
-      <p>¿Cuál es la tarea de los consejeros durante “Repasar las pautas para los bailes de PFJ” del día martes?</p>
-      <p class="lee"><b>Lee:</b> Manual para el Personal, página 48 (“Pautas para los bailes de la conferencia PFJ” y “Baile”); Manual para el Participante, página 38.</p>
-      <div class="tarea" data-tarea="bailes-pautas"><span class="tarea__etq">Tarea</span><p>Resume con tus palabras la tarea de los consejeros durante el repaso de las pautas para los bailes.</p></div>
-      <div class="repaso" data-repaso="martes"></div>
-      <label class="completar"><input type="checkbox"> Marcar como completado</label>
-    </section>
+    <!-- ================= MÓDULO 3 ================= -->
+    <div class="modulo" data-modulo="3" id="modulo-3">
+      <div class="modulo__cabecera"><span>Módulo 3</span><h2>El día martes y el baile</h2></div>
 
-    <!-- 9 -->
-    <section class="seccion lista-videos" id="talleres" data-seccion>
-      <h2>Talleres para consejeros</h2>
-      <p>Tres talleres breves impartidos por el staff de tu sesión.</p>
-      <div class="video">
-        <div class="poster"><div class="poster__texto">Enseñar a<br>los jóvenes</div><button class="reproducir" aria-label="Reproducir"></button></div>
-        <p class="video__pie"><b>Sugerencias para enseñar a los jóvenes</b><span>Directora de sesión · 10 min. Basado en <a href="https://www.churchofjesuschrist.org/study/manual/teaching-in-the-saviors-way-2022?lang=spa" target="_blank" rel="noopener">Enseñar a la manera del Salvador</a>.</span></p>
-      </div>
-      <div class="tarea" data-tarea="ensenar-jovenes"><span class="tarea__etq">Tarea</span><p>Elige una de las Sugerencias para enseñar a los jóvenes y explica cómo la aplicarás en el estudio del Evangelio con tu compañía.</p></div>
-      <div class="video">
-        <div class="poster"><div class="poster__texto">Vestimenta y<br>apariencia</div><button class="reproducir" aria-label="Reproducir"></button></div>
-        <p class="video__pie"><b>Principios de vestimenta y apariencia</b><span>Codirectora de sesión · 15 min. Basado en la <a href="#">Capacitación sobre el modo de vestir y la apariencia</a>.</span></p>
-      </div>
-      <div class="video">
-        <div class="poster"><div class="poster__texto">Tiempo libre<br>de consejeros</div><button class="reproducir" aria-label="Reproducir"></button></div>
-        <p class="video__pie"><b>Tiempo libre de consejeros</b><span>Codirector de sesión · 10 min. La importancia del tiempo libre y cómo usarlo con sabiduría, según el punto 4 de la <a href="#">Guía de Aplicación al Área</a> y la página 4 del Manual para el Personal.</span></p>
-      </div>
-      <div class="tarea" data-tarea="tiempo-libre"><span class="tarea__etq">Tarea</span><p>¿Cómo usarás con sabiduría tu tiempo libre de consejero durante la semana?</p></div>
-      <div class="repaso" data-repaso="talleres"></div>
-      <label class="completar"><input type="checkbox"> Marcar como completado</label>
-    </section>
+      <section class="seccion" id="martes" data-seccion>
+        <h2>Actividades del día martes</h2>
+        <p class="meta"><span class="etq">Coordinadores Auxiliares</span></p>
+        <h3>Reverencia en la clase</h3>
+        <p>¿Cómo ayudar a los jóvenes a ser reverentes y a prestar atención? Puedes apoyarte en el Análisis sobre la reverencia y el testimonio del día jueves: la reverencia no es solo estar callado, sino una condición del ser.</p>
+        <p class="lee"><b>Lee:</b> Manual para el Personal, página 60; Manual para el Participante, página 80.</p>
+        <h3>Preparación de estandartes y versos cantados</h3>
+        <div class="video" data-video="estandartes">
+          <div class="poster"><div class="poster__texto">Estandartes y<br>versos cantados</div><button class="reproducir" aria-label="Reproducir"></button></div>
+          <p class="video__pie"><b>Reglas de confección</b><span>Y cómo evitar la rivalidad entre compañías.</span></p>
+        </div>
+        <p class="lee"><b>Lee:</b> Manual para el Personal, página 47; Manual para el Participante, página 36.</p>
+        <h3>Comportamiento en los bailes</h3>
+        <p>Repasa cuál es la tarea de los consejeros durante “Repasar las pautas para los bailes de PFJ” del día martes.</p>
+        <p class="lee"><b>Lee:</b> Manual para el Personal, página 48 (“Pautas para los bailes de la conferencia PFJ” y “Baile”); Manual para el Participante, página 38.</p>
+        <label class="completar"><input type="checkbox"> Marcar como completado</label>
+      </section>
 
-    <!-- 10 -->
-    <section class="seccion" id="mensaje-final" data-seccion>
-      <h2>Reflexionar. Analizar. Anotar.</h2>
-      <p>“Reflexiona sobre las cosas que has recibido” (Doctrina y Convenios 30:3). Medita en estas preguntas y anota tus impresiones:</p>
-      <ul>
-        <li>¿Qué puedes hacer en el Reúnete con tu consejero para que cada joven sienta desde el primer día que es amado y que fue esperado?</li>
-        <li>¿Cómo puedes ayudar a tu compañía a sentirse unida sin crear rivalidad con las demás compañías?</li>
-        <li>¿Qué significa para ti regocijarte en Cristo durante tu preparación como consejero?</li>
-      </ul>
-      <div class="tarea" data-tarea="metas-testimonio"><span class="tarea__etq">Tarea</span><p>Comparte brevemente tu testimonio sobre la importancia de establecer metas y cómo eso te ayuda a mantenerte en la senda que te lleva de regreso a nuestro Padre Celestial.</p></div>
+      <section class="seccion" id="baile" data-seccion>
+        <h2>Baile en línea</h2>
+        <p class="meta"><span class="etq">10 min</span><span class="etq">Coordinador Auxiliar del baile</span></p>
+        <div class="video" data-video="baile">
+          <div class="poster"><div class="poster__texto">Baile<br>en línea</div><button class="reproducir" aria-label="Reproducir"></button></div>
+          <p class="video__pie"><b>Paso a paso</b><span>El Coordinador Auxiliar encargado del baile te enseña cada paso.</span></p>
+        </div>
+        <p><b>ACTIVIDAD:</b> aprende el baile con el video y practícalo con alguien más. Lo volveremos a practicar juntos en la sesión recuperativa y en las siguientes capacitaciones.</p>
+        <label class="completar"><input type="checkbox"> Marcar como completado</label>
+      </section>
 
-      <h2 style="margin-top:56px">Mensaje final: Regocíjate en Cristo</h2>
-      <p class="meta"><span class="etq">15 min</span><span class="etq">Director de sesión</span></p>
-      <div class="video">
-        <div class="poster"><div class="poster__texto">Regocíjate<br>en Cristo</div><button class="reproducir" aria-label="Reproducir"></button></div>
-        <p class="video__pie"><b>Mensaje final</b><span>El Director de sesión comparte un mensaje basado en el lema de las conferencias PFJ 2027 (Filipenses 4:4).</span></p>
-      </div>
-      <label class="completar"><input type="checkbox"> Marcar como completado</label>
-    </section>
+      <div class="repaso" data-modulo-repaso="3"></div>
+      <div class="modulo__nav"></div>
+    </div>
+
+    <!-- ================= MÓDULO 4 ================= -->
+    <div class="modulo" data-modulo="4" id="modulo-4">
+      <div class="modulo__cabecera"><span>Módulo 4</span><h2>Talleres y mensaje final</h2></div>
+
+      <section class="seccion lista-videos" id="talleres" data-seccion>
+        <h2>Talleres para consejeros</h2>
+        <p>Tres talleres breves impartidos por el staff de tu sesión.</p>
+        <div class="video" data-video="ensenar-jovenes">
+          <div class="poster"><div class="poster__texto">Enseñar a<br>los jóvenes</div><button class="reproducir" aria-label="Reproducir"></button></div>
+          <p class="video__pie"><b>Sugerencias para enseñar a los jóvenes</b><span>Directora de sesión · 10 min. Basado en <a href="https://www.churchofjesuschrist.org/study/manual/teaching-in-the-saviors-way-2022?lang=spa" target="_blank" rel="noopener">Enseñar a la manera del Salvador</a>.</span></p>
+        </div>
+        <div class="video" data-video="vestimenta">
+          <div class="poster"><div class="poster__texto">Vestimenta y<br>apariencia</div><button class="reproducir" aria-label="Reproducir"></button></div>
+          <p class="video__pie"><b>Principios de vestimenta y apariencia</b><span>Codirectora de sesión · 15 min.</span></p>
+        </div>
+        <div class="video" data-video="tiempo-libre">
+          <div class="poster"><div class="poster__texto">Tiempo libre<br>de consejeros</div><button class="reproducir" aria-label="Reproducir"></button></div>
+          <p class="video__pie"><b>Tiempo libre de consejeros</b><span>Codirector de sesión · 10 min. La importancia del tiempo libre y cómo usarlo con sabiduría, según el punto 4 de la Guía de Aplicación al Área y la página 4 del Manual para el Personal.</span></p>
+        </div>
+        <label class="completar"><input type="checkbox"> Marcar como completado</label>
+      </section>
+
+      <section class="seccion" id="mensaje-final" data-seccion>
+        <h2>Reflexionar. Analizar. Anotar.</h2>
+        <p>“Reflexiona sobre las cosas que has recibido” (Doctrina y Convenios 30:3). Medita en estas preguntas y anota tus impresiones en tu cuaderno personal:</p>
+        <ul>
+          <li>¿Qué puedes hacer en el Reúnete con tu consejero para que cada joven sienta desde el primer día que es amado y que fue esperado?</li>
+          <li>¿Cómo puedes ayudar a tu compañía a sentirse unida sin crear rivalidad con las demás compañías?</li>
+          <li>¿Qué significa para ti regocijarte en Cristo durante tu preparación como consejero?</li>
+        </ul>
+        <h2 style="margin-top:56px">Mensaje final: Regocíjate en Cristo</h2>
+        <p class="meta"><span class="etq">15 min</span><span class="etq">Director de sesión</span></p>
+        <div class="video" data-video="mensaje-final">
+          <div class="poster"><div class="poster__texto">Regocíjate<br>en Cristo</div><button class="reproducir" aria-label="Reproducir"></button></div>
+          <p class="video__pie"><b>Mensaje final</b><span>El Director de sesión comparte un mensaje basado en el lema de las conferencias PFJ 2027 (Filipenses 4:4).</span></p>
+        </div>
+        <label class="completar"><input type="checkbox"> Marcar como completado</label>
+      </section>
+
+      <div class="repaso" data-modulo-repaso="4"></div>
+      <div class="modulo__nav"></div>
+    </div>
 
     <section class="seccion" id="sesion-recuperativa">
       <h2>Sesión recuperativa</h2>
       <p>Si hiciste esta capacitación en línea en lugar de la presencial, debes asistir a la sesión recuperativa de tu sesión. Allí:</p>
       <ul>
         <li>Repasaremos juntos todas las actividades de los días lunes y martes.</li>
-        <li>Resolveremos tus dudas y revisaremos algunas de tus tareas.</li>
+        <li>Resolveremos tus dudas.</li>
         <li>Practicaremos el baile en línea y uno de los juegos de la noche de hogar.</li>
         <li>Conocerás al staff y a los demás consejeros de tu sesión.</li>
       </ul>
-      <p>Tu capacitación se considera completa cuando terminaste las 10 secciones de esta página <b>y</b> asististe a la sesión recuperativa.</p>
-      <div class="nota-staff"><b>Para el staff de sesión</b>Indiquen aquí la fecha, la hora y el lugar (o el enlace de Meet o Zoom) de la sesión recuperativa.</div>
+      <p>Tu capacitación se considera completa cuando terminaste los 4 módulos de esta página <b>y</b> asististe a la sesión recuperativa.</p>
+      <div class="info-sesion" data-info-sesion="recuperativa"></div>
     </section>
 
     <section class="seccion recursos" id="recursos">
       <h2>Recursos adicionales</h2>
-      <p><a href="#">Manual para el Personal PFJ 2027</a></p>
-      <p><a href="#">Manual para el Participante PFJ 2027</a></p>
-      <p><a href="#">Horario PFJ 2027 – Regocíjate en Cristo</a></p>
-      <p><a href="#">Guía de Aplicación del Manual para el Personal al Área</a></p>
       <p><a href="https://www.churchofjesuschrist.org/study/manual/teaching-in-the-saviors-way-2022?lang=spa" target="_blank" rel="noopener">Enseñar a la manera del Salvador</a></p>
-      <p><a href="#">Kit de Primeros Auxilios sobre Salud Mental</a></p>
       <p><a href="https://www.churchofjesuschrist.org/callings/church-safety-and-health/protecting-children-and-youth?lang=spa" target="_blank" rel="noopener">Cómo proteger a los niños y a los jóvenes</a></p>
       <p><a href="index.html">← Volver a la capacitación en línea</a></p>
     </section>
@@ -342,56 +320,6 @@
 
 <footer class="pie">Capacitación para consejeros · PFJ 2027</footer>
 
-<script>
-/* Preguntas de repaso por sección.
-   o = opciones, c = índice de la correcta, e = explicación.
-   Basadas en la minuta 2027 y en los formularios de tareas anteriores (verificar páginas con el Manual 2027). */
-const REPASOS = {
-  "que-es-pfj": [
-    { p: "¿Cuál es el lema de las conferencias PFJ 2027?", o: ["Anda conmigo", "Regocíjate en Cristo", "Allegaos a mí"], c: 1, e: "“Regocíjate en Cristo” (Filipenses 4:4)." },
-    { p: "¿Cuánto tiempo tiene vigencia la capacitación Cómo proteger a los niños y a los jóvenes?", o: ["1 año", "3 años", "No vence"], c: 1, e: "Tiene una vigencia de 3 años." },
-    { p: "¿Las capacitaciones para consejeros abarcan todas las actividades de la conferencia?", o: ["Sí, no hace falta estudiar más", "No; el llamamiento implica el estudio personal de los manuales", "Solo las del día lunes"], c: 1, e: "Las capacitaciones no abarcan todo: tu llamamiento implica el estudio personal de los manuales de PFJ." }
-  ],
-  "lunes": [
-    { p: "¿Quién es el principal responsable de supervisar el check-in?", o: ["El Matrimonio Director", "El Coordinador Auxiliar encargado de la llegada de participantes", "Los consejeros de grupo"], c: 1, e: "Lo supervisa el Coordinador Auxiliar encargado de la llegada de participantes." },
-    { p: "El check-in es una actividad que se realiza a nivel de…", o: ["Grupo", "Compañía", "Sesión"], c: 2, e: "La llegada de participantes se realiza a nivel de sesión." },
-    { p: "Si hay un problema con inscripciones, dormitorios o cambio de compañía, el consejero acude primero a…", o: ["El Setenta de Área", "Los miembros del staff en la mesa de soluciones", "Los padres del participante"], c: 1, e: "Se acude primero a los miembros del staff que están en la mesa de soluciones." },
-    { p: "Los consejeros con asignaciones durante la llegada deben…", o: ["Presentarse ante el Coordinador Auxiliar a cargo 30 minutos antes del check-in", "Llegar cuando lleguen los participantes", "Esperar en el dormitorio"], c: 0, e: "Deben presentarse 30 minutos antes ante el Coordinador Auxiliar a cargo." },
-    { p: "El Reúnete con tu consejero es una actividad de…", o: ["Grupo", "Compañía", "Sesión"], c: 0, e: "Es una actividad de grupo, no de compañía." },
-    { p: "¿Quién dirige el Reúnete con tu consejero?", o: ["El Coordinador Auxiliar", "El consejero de grupo", "El Matrimonio Codirector"], c: 1, e: "Lo dirige el consejero de grupo; lo supervisa el Coordinador Auxiliar de cada compañía." },
-    { p: "Un consejero se presenta ante los participantes como…", o: ["Un amigo", "Un líder y mentor", "Un amigo, un maestro y un líder y mentor"], c: 2, e: "El consejero es amigo, maestro y líder y mentor." },
-    { p: "¿Pueden los participantes salir solos de una actividad, por ejemplo al baño?", o: ["Sí, si avisan a su consejero", "No, los jóvenes no van solos a ninguna parte", "Solo los mayores de 16 años"], c: 1, e: "Los jóvenes no pueden ir solos a ninguna parte." },
-    { p: "Un participante pide comer con un amigo de otra compañía. El consejero…", o: ["Siempre debe aceptarlo", "Puede autorizarlo solo si una razón fundada en las necesidades del participante lo justifica", "Nunca puede autorizarlo"], c: 1, e: "Solo se autoriza cuando una razón fundada en las necesidades del participante lo justifica." }
-  ],
-  "lunes-2": [
-    { p: "El Reúnete con tu compañía es una actividad de…", o: ["Grupo", "Compañía", "Sesión"], c: 1, e: "Se realiza a nivel de compañía; la supervisa el Coordinador Auxiliar de cada compañía." },
-    { p: "¿Cuál es el objetivo principal del Reúnete con tu compañía?", o: ["Repasar las normas de conducta", "Que los jóvenes se conozcan entre ellos", "Ensayar el programa musical"], c: 1, e: "Su objetivo principal es que los jóvenes se conozcan entre ellos." },
-    { p: "¿Quién elige el nombre de la compañía?", o: ["Los participantes, por votación", "El Matrimonio Director", "Los consejeros"], c: 2, e: "Los consejeros lo asignan y lo comparten al final del Reúnete con tu compañía." },
-    { p: "¿Qué deben preparar los consejeros antes del Reúnete con tu compañía?", o: ["El discurso del élder Holland indicado en el manual", "Un juego nuevo inventado por ellos", "Nada, es una actividad libre"], c: 0, e: "Estudian el discurso del élder Holland para dirigir el análisis de la página 12 del Manual para el Participante." },
-    { p: "¿Quién supervisa la Orientación?", o: ["Los Coordinadores de sesión", "Los consejeros", "El Coordinador Auxiliar del baile"], c: 0, e: "La Orientación es una actividad de sesión supervisada por los Coordinadores de sesión." },
-    { p: "Durante la Orientación, los consejeros…", o: ["Se quedan en los dormitorios", "Ayudan a entusiasmar a los jóvenes y bailan los bailes en línea", "Dan las asignaciones de devocionales"], c: 1, e: "Ayudan a entusiasmar a los jóvenes con PFJ y bailan los bailes en línea." }
-  ],
-  "noche-de-hogar": [
-    { p: "Los juegos de la noche de hogar se realizan a nivel de…", o: ["Grupo", "Compañía", "Sesión"], c: 1, e: "Se realizan por compañía y los supervisa el Coordinador Auxiliar de cada compañía." },
-    { p: "Si el análisis de un juego está tomando demasiado tiempo, el manual sugiere…", o: ["Cortar el análisis y pasar al siguiente juego", "No apresurar el análisis: un juego puede ser suficiente", "Dejar el análisis para el día siguiente"], c: 1, e: "No hay que apresurar el análisis; un solo juego puede ser suficiente." },
-    { p: "El establecimiento de metas sigue…", o: ["Un modelo para el crecimiento", "El horario comentado", "La guía de aplicación del Área"], c: 0, e: "Se sigue “Un modelo para el crecimiento” (Manual para el Personal, páginas 32–37)." },
-    { p: "El establecimiento de metas se realiza a nivel de…", o: ["Grupo", "Compañía", "Sesión"], c: 1, e: "Se realiza por compañía; lo puede guiar el consejero de grupo o auxiliar, o el Coordinador Auxiliar de la compañía." }
-  ],
-  "taller-1": [
-    { p: "Durante el check-in notas que un joven necesita un apoyo que no estaba informado. ¿Qué haces?", o: ["Lo resuelvo yo mismo con mi compañía", "Lo recibo con respeto y naturalidad, anoto su nombre y compañía e informo al Matrimonio Codirector", "Espero al final de la semana para comentarlo"], c: 1, e: "No corresponde que los consejeros resuelvan estas situaciones por sí mismos: informan al Matrimonio Codirector tan pronto como sea posible." },
-    { p: "Si durante las capacitaciones tienes dudas sobre cómo proceder ante una situación particular…", o: ["Envías tu consulta al grupo de WhatsApp de tu sesión", "Buscas la respuesta en internet", "Preguntas directamente al joven"], c: 0, e: "Las consultas se envían al grupo de WhatsApp de la sesión; el Matrimonio Codirector responde con la orientación del Equipo de Inclusión del Área." },
-    { p: "¿Se espera que los consejeros sean especialistas en Inclusión?", o: ["Sí", "No; deben estar atentos, recibir con respeto y comunicar oportunamente", "Solo los que estudian psicología"], c: 1, e: "El objetivo no es que sean especialistas, sino que estén atentos y comuniquen oportunamente." }
-  ],
-  "martes": [
-    { p: "Según el análisis sobre la reverencia, la reverencia es…", o: ["Solo estar callado", "Una condición del ser, no solo estar callado", "Algo que se exige únicamente en la reunión de testimonios"], c: 1, e: "La reverencia no es solo estar callado, sino una condición del ser." },
-    { p: "Al preparar estandartes y versos cantados, los consejeros deben cuidar…", o: ["Que su compañía gane a toda costa", "Que no haya rivalidad entre compañías", "Que los jóvenes no participen"], c: 1, e: "Una competencia alegre y unida, sin rivalidad entre compañías." }
-  ],
-  "talleres": [
-    { p: "¿En qué manual se basa el taller Sugerencias para enseñar a los jóvenes?", o: ["Predicad Mi Evangelio", "Enseñar a la manera del Salvador", "Manual General"], c: 1, e: "Se basa en Enseñar a la manera del Salvador." },
-    { p: "¿Dónde están las instrucciones sobre el tiempo libre de consejeros?", o: ["Punto 4 de la Guía de Aplicación al Área", "Manual para el Participante, página 4", "No hay instrucciones"], c: 0, e: "En el punto 4 de la Guía de Aplicación al Área y en la página 4 del Manual para el Personal." }
-  ]
-};
-</script>
 <script src="app.js"></script>
 </body>
 </html>
