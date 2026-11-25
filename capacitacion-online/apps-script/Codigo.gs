@@ -23,7 +23,8 @@
  *  Versión: "Nueva versión" > Implementar. Así la URL no cambia.
  */
 
-const SITIO = "https://pfj-sudamerica-sur.github.io/capacitacion-online/";
+// Se lee desde el repositorio (no desde la página publicada) para que funcione aunque GitHub Pages esté lento.
+const DATOS_URL = "https://raw.githubusercontent.com/PFJ-Sudamerica-Sur/pfj-sudamerica-sur.github.io/main/capacitacion-online/datos.json";
 const CARPETA_SESIONES = "Capacitación PFJ 2027 · Planillas por sesión";
 
 const PANEL = {
@@ -58,7 +59,7 @@ function prepararPanel() {
   if (existentes.length && ui.alert("Ya existen las pestañas: " + existentes.join(", ") +
       ".\nSi continúas, esas pestañas no se tocan y solo se crean las que faltan.", ui.ButtonSet.OK_CANCEL) !== ui.Button.OK) return;
 
-  const d = JSON.parse(UrlFetchApp.fetch(SITIO + "datos.json", { muteHttpExceptions: true }).getContentText());
+  const d = JSON.parse(UrlFetchApp.fetch(DATOS_URL, { muteHttpExceptions: true }).getContentText());
 
   instrucciones_(ss);
 
