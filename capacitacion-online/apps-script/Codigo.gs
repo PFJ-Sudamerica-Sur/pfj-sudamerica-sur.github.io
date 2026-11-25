@@ -47,6 +47,7 @@ function onOpen() {
   SpreadsheetApp.getUi().createMenu("Capacitación PFJ")
     .addItem("Preparar panel (primera vez)", "prepararPanel")
     .addSeparator()
+    .addItem("Crear planilla de prueba (fila seleccionada, sin compartir)", "crearPlanillaPrueba")
     .addItem("Crear o actualizar planillas por sesión", "crearPlanillasSesion")
     .addToUi();
 }
@@ -240,36 +241,17 @@ function crearPlanillasSesion() {
   const hc = ss.getSheetByName("Coordinadores");
   if (!hc) { ui.alert("Falta la pestaña Coordinadores. Usa primero \"Preparar panel (primera vez)\"."); return; }
 
-  const carpeta = carpetaSesiones_();
   const yo = Session.getEffectiveUser().getEmail().toLowerCase();
-  const maestraInforme = hoja_("Informe").getDataRange().getValues().slice(1);
-  const maestraResp = hoja_("Respuestas").getDataRange().getValues().slice(1);
   const resumen = [];
 
   const datos = hc.getLastRow() > 1 ? hc.getRange(2, 1, hc.getLastRow() - 1, 4).getValues() : [];
   datos.forEach((r, i) => {
     const pais = String(r[0]).trim(), sesion = String(r[1]).trim();
-    const correos = String(r[2]).split(/[,;\s]+/).map((c) => c.trim().toLowerCase()).filter((c) => /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(c));
-    let url = String(r[3]).trim();
+    const correos = correosDe_(r[2]);
+    const url = String(r[3]).trim();
     if (!sesion || (!correos.length && !url)) return;
 
-    let planilla;
-    if (url) {
-      planilla = SpreadsheetApp.openByUrl(url);
-    } else {
-      // Crear la planilla de la sesión y copiar lo que ya hubiera llegado de esa sesión
-      planilla = SpreadsheetApp.create("Capacitación PFJ 2027 · " + sesion + (pais ? " (" + pais + ")" : ""));
-      DriveApp.getFileById(planilla.getId()).moveTo(carpeta);
-      hoja_("Informe", planilla); hoja_("Respuestas", planilla);
-      const inicial = planilla.getSheetByName("Hoja 1") || planilla.getSheetByName("Sheet1");
-      if (inicial) planilla.deleteSheet(inicial);
-      const deSesion = (filas, col) => filas.filter((f) => String(f[col]).trim() === sesion);
-      const inf = deSesion(maestraInforme, 5), resp = deSesion(maestraResp, 4);
-      if (inf.length) planilla.getSheetByName("Informe").getRange(2, 1, inf.length, inf[0].length).setValues(inf);
-      if (resp.length) planilla.getSheetByName("Respuestas").getRange(2, 1, resp.length, resp[0].length).setValues(resp);
-      url = planilla.getUrl();
-      hc.getRange(i + 2, 4).setValue(url);
-    }
+    const planilla = url ? SpreadsheetApp.openByUrl(url) : nuevaPlanillaSesion_(hc, i + 2, pais, sesion);
 
     // Compartir solo con los coordinadores de la lista (solo lectura) y quitar a quienes ya no están
     const archivo = DriveApp.getFileById(planilla.getId());
@@ -282,6 +264,44 @@ function crearPlanillasSesion() {
   ui.alert(resumen.length
     ? "Listo. Planillas creadas o actualizadas:\n\n" + resumen.join("\n")
     : "No hay sesiones con correos en la pestaña Coordinadores.");
+}
+
+/** Crea UNA planilla para la sesión de la fila seleccionada en Coordinadores, sin compartirla con nadie. */
+function crearPlanillaPrueba() {
+  const ui = SpreadsheetApp.getUi();
+  const ss = SpreadsheetApp.getActiveSpreadsheet();
+  const hc = ss.getSheetByName("Coordinadores");
+  const hoja = ss.getActiveSheet();
+  const fila = hoja.getActiveRange() ? hoja.getActiveRange().getRow() : 0;
+  if (!hc || hoja.getName() !== "Coordinadores" || fila < 2) {
+    ui.alert("Primero ve a la pestaña Coordinadores y haz clic en la fila de la sesión que quieres probar.");
+    return;
+  }
+  const [pais, sesion, , urlActual] = hc.getRange(fila, 1, 1, 4).getValues()[0].map((v) => String(v).trim());
+  if (!sesion) { ui.alert("Esa fila no tiene sesión."); return; }
+  if (urlActual) { ui.alert("La sesión " + sesion + " ya tiene su planilla:\n\n" + urlActual); return; }
+  const planilla = nuevaPlanillaSesion_(hc, fila, pais, sesion);
+  ui.alert("Planilla de prueba creada para " + sesion + " (todavía no está compartida con nadie):\n\n" + planilla.getUrl() +
+    "\n\nCuando uses \"Crear o actualizar planillas por sesión\", esta misma planilla se compartirá con sus coordinadores.");
+}
+
+/** Crea la planilla de una sesión en la carpeta de sesiones, copia lo que ya hubiera llegado y anota su URL. */
+function nuevaPlanillaSesion_(hc, fila, pais, sesion) {
+  const planilla = SpreadsheetApp.create("Capacitación PFJ 2027 · " + sesion + (pais ? " (" + pais + ")" : ""));
+  DriveApp.getFileById(planilla.getId()).moveTo(carpetaSesiones_());
+  hoja_("Informe", planilla); hoja_("Respuestas", planilla);
+  const inicial = planilla.getSheetByName("Hoja 1") || planilla.getSheetByName("Sheet1");
+  if (inicial) planilla.deleteSheet(inicial);
+  const deSesion = (nombre, col) => hoja_(nombre).getDataRange().getValues().slice(1).filter((f) => String(f[col]).trim() === sesion);
+  const inf = deSesion("Informe", 5), resp = deSesion("Respuestas", 4);
+  if (inf.length) planilla.getSheetByName("Informe").getRange(2, 1, inf.length, inf[0].length).setValues(inf);
+  if (resp.length) planilla.getSheetByName("Respuestas").getRange(2, 1, resp.length, resp[0].length).setValues(resp);
+  hc.getRange(fila, 4).setValue(planilla.getUrl());
+  return planilla;
+}
+
+function correosDe_(texto) {
+  return String(texto).split(/[,;\s]+/).map((c) => c.trim().toLowerCase()).filter((c) => /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(c));
 }
 
 function carpetaSesiones_() {
