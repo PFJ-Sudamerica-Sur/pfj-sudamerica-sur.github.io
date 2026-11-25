@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Segunda capacitación para consejeros · PFJ 2027</title>
+<link rel="stylesheet" href="estilos.css">
+</head>
+<body data-capacitacion="C2">
+<div class="barra-sup"></div>
+
+<main>
+  <div class="titulo-bloque">
+    <h1>Segunda capacitación para consejeros</h1>
+    <p class="cita">Actividades de los días miércoles y jueves de PFJ.<br>Desarrollar habilidades de enseñanza.</p>
+  </div>
+
+  <div class="columna">
+    <p>¡Bienvenido a la segunda capacitación en línea para consejeros! Está dividida en <b>5 módulos</b>. Cada módulo tiene videos, las páginas del manual que debes estudiar y, al final, un breve <b>repaso</b> de alternativas. Invita a tu familia, a tus amigos o a otros consejeros de tu sesión a participar en las actividades prácticas.</p>
+    <p>Si haces esta capacitación en línea, además deberás asistir a la <a href="#sesion-recuperativa">sesión recuperativa</a> de tu sesión, donde repasaremos juntos todos los días.</p>
+    <p class="meta"><span class="etq">Tiempo estimado: 4 a 5 h</span><span class="etq">5 módulos</span><span class="etq">+ sesión recuperativa</span></p>
+
+    <!-- Registro -->
+    <section class="registro" id="registro">
+      <h2>Antes de empezar</h2>
+      <p>Completa tus datos. Tu avance se guarda en este celular o computador, así que <b>termina la capacitación en el mismo dispositivo</b>. Si ya hiciste la primera capacitación aquí, tus datos aparecen solos. Los coordinadores de tu sesión reciben tu capacitación cuando presionas <b>Finalizar y enviar</b>, al final.</p>
+      <form id="reg-form">
+        <div class="campos">
+          <label>Nombre y apellido<input name="nombre" required autocomplete="name"></label>
+          <label>Correo electrónico<input name="correo" type="email" required autocomplete="email"></label>
+          <label>Sesión PFJ<select name="sesion" id="reg-sesion" required><option value="">Cargando sesiones…</option></select></label>
+          <label>Estaca<select name="estaca" id="reg-estaca" required disabled><option value="">Primero elige tu sesión</option></select></label>
+          <label class="campo-ancho" id="reg-estaca-otra-campo" hidden>Escribe el nombre de tu estaca<input name="estacaOtra" id="reg-estaca-otra" placeholder="Por ejemplo: Estaca de Santiago Chile Ñuñoa"></label>
+          <label class="campo-ancho">¿Cómo haces esta capacitación?
+            <select name="modalidad" required>
+              <option value="">Elige una opción</option>
+              <option>En línea, en lugar de la presencial</option>
+              <option>En línea, como repaso (asistí a la presencial)</option>
+            </select></label>
+        </div>
+        <button class="boton-rojo" type="submit">Comenzar</button>
+      </form>
+      <p class="registro__saludo">Registrado como <b id="reg-nombre-saludo"></b>. <button type="button" id="reg-cambiar">Cambiar datos</button></p>
+      <div class="info-sesion" data-info-sesion="contacto"></div>
+    </section>
+
+    <!-- Índice por módulos -->
+    <nav class="indice" aria-label="Módulos de la capacitación">
+      <p class="indice__titulo"><span>Módulos</span><span id="progreso-texto"></span></p>
+      <div id="indice-modulos" class="indice-modulos"></div>
+      <div class="barra"><span id="progreso-barra"></span></div>
+    </nav>
+
+    <!-- ================= MÓDULO 1 ================= -->
+    <div class="modulo" data-modulo="1" id="modulo-1">
+      <div class="modulo__cabecera"><span>Módulo 1</span><h2>Bienvenida y repaso</h2></div>
+
+      <section class="seccion" id="introduccion" data-seccion>
+        <h2>Introducción</h2>
+        <h3>Pensamiento espiritual</h3>
+        <p class="video__quien">Codirector de sesión · 10 min</p>
+        <p>El Codirector de tu sesión comparte un pensamiento espiritual basado en el mensaje “El carácter de Cristo”, del presidente D. Todd Christofferson, Segundo Consejero de la Primera Presidencia.</p>
+        <div class="video" data-video="c2-pensamiento-espiritual">
+          <div class="poster"><div class="poster__texto">El carácter<br>de Cristo</div><button class="reproducir" aria-label="Reproducir"></button></div>
+          <p class="video__pie"><b>“El carácter de Cristo”</b><span>Grabado por el Codirector de tu sesión.</span></p>
+        </div>
+        <h3>Repaso de los días lunes y martes</h3>
+        <ul>
+          <li>Repasa el objetivo de la conferencia PFJ: fortalecer la fe en Jesucristo y en Su Evangelio restaurado, experimentar un mayor sentido de pertenencia y recibir poder para continuar teniendo experiencias espirituales en casa.</li>
+          <li>Repasa las normas de Conducta en las actividades para jóvenes. Tú las repasarás con los jóvenes en el Reúnete con tu consejero.</li>
+          <li>Si te quedaron dudas sobre el lunes o el martes, pregúntalas en el grupo de WhatsApp de tu sesión o llévalas a la sesión recuperativa.</li>
+        </ul>
+        <p class="lee"><b>Lee:</b> Manual para el Personal, páginas 1–3.</p>
+        <label class="completar"><input type="checkbox"> Marcar como completado</label>
+      </section>
+
+      <div class="repaso" data-modulo-repaso="1"></div>
+      <div class="modulo__nav"></div>
+    </div>
+
+    <!-- ================= MÓDULO 2 ================= -->
+    <div class="modulo" data-modulo="2" id="modulo-2">
+      <div class="modulo__cabecera"><span>Módulo 2</span><h2>El día miércoles</h2></div>
+
+      <section class="seccion" id="compartir-evangelio" data-seccion>
+        <h2>Compartir el Evangelio y servicio</h2>
+        <p class="meta"><span class="etq">Coordinadores Auxiliares</span></p>
+        <h3>Actividad Compartir el Evangelio</h3>
+        <div class="video" data-video="compartir-evangelio">
+          <div class="poster"><div class="poster__texto">Compartir el<br>Evangelio</div><button class="reproducir" aria-label="Reproducir"></button></div>
+          <p class="video__pie"><b>Programa y rotaciones</b><span>Cómo funciona la actividad, a partir de la tabla de las instrucciones.</span></p>
+        </div>
+        <ul>
+          <li>Las instrucciones de esta actividad no están en la versión actual del Manual para el Personal: están en un documento aparte.</li>
+          <li>El material para que los participantes preparen su lección está impreso al final del Manual para el Participante (versión física, no digital).</li>
+          <li>Tu tarea es ayudar a cada joven a prepararse para enseñar eficazmente.</li>
+        </ul>
+        <p class="lee"><b>Lee:</b> <a href="https://drive.google.com/file/d/1rNqKDnuiVbt671ZTHqJ0KuZ7vm3z794E/view" target="_blank" rel="noopener">Instrucciones de la actividad Compartir el Evangelio (PDF)</a>.</p>
+        <p><b>ACTIVIDAD:</b> pídele a un familiar o amigo que prepare una lección breve con el material de la actividad y practica cómo lo ayudarías a prepararse, como lo harías con un joven de tu grupo.</p>
+        <h3>Actividad de servicio</h3>
+        <p class="video__quien">Coordinador Auxiliar de la actividad de servicio · 5 min</p>
+        <p>Los jóvenes de todas las sesiones prepararán kits escolares que serán donados a escuelas rurales. Los materiales los proporciona el Servicio de Bienestar del Área.</p>
+        <p class="lee"><b>Lee:</b> <a href="https://drive.google.com/drive/folders/1IkRnow-jGqYxIj5dJ61CcLQYh-Q72mbx" target="_blank" rel="noopener">Información detallada de la actividad de servicio</a>.</p>
+        <label class="completar"><input type="checkbox"> Marcar como completado</label>
+      </section>
+
+      <section class="seccion" id="noche-de-juegos" data-seccion>
+        <h2>Noche de juegos</h2>
+        <p class="meta"><span class="etq">Coordinador Auxiliar de la noche de juegos</span></p>
+        <div class="video" data-video="noche-de-juegos">
+          <div class="poster"><div class="poster__texto">Noche de<br>juegos</div><button class="reproducir" aria-label="Reproducir"></button></div>
+          <p class="video__pie"><b>Estaciones, jueces y versos cantados</b><span>La dinámica de estaciones, la rotación de los jueces y la final de versos cantados.</span></p>
+        </div>
+        <ul>
+          <li>Los consejeros explican los juegos a los jóvenes durante la Preparación de la noche de juegos de la compañía. Conocerlos bien de antemano te permite explicarlos con claridad y en poco tiempo, para que los jóvenes lleguen a cada estación sabiendo qué hacer y disfruten más.</li>
+          <li>La meta es una competencia emocionante y cordial, no intensa ni divisiva. Tu ánimo y tu ejemplo marcan el tono de tu compañía.</li>
+        </ul>
+        <p><b>ACTIVIDAD:</b> elige uno de los juegos y explícaselo a un familiar o amigo como lo harías en la Preparación de la noche de juegos. Pregúntale qué no le quedó claro.</p>
+        <label class="completar"><input type="checkbox"> Marcar como completado</label>
+      </section>
+
+      <section class="seccion" id="taller-1" data-seccion>
+        <h2>Taller 1: Primeros auxilios de salud mental</h2>
+        <p class="meta"><span class="etq">10 min</span><span class="etq">Matrimonio Codirector</span></p>
+        <div class="video" data-video="taller-salud-mental">
+          <div class="poster"><div class="poster__texto">Primeros auxilios<br>de salud mental</div><button class="reproducir" aria-label="Reproducir"></button></div>
+          <p class="video__pie"><b>Taller 1</b><span>Una visión general del Kit de Primeros Auxilios sobre Salud Mental, impartida por el Matrimonio Codirector de tu sesión.</span></p>
+        </div>
+        <h3>Objetivo</h3>
+        <p>Recordar a los consejeros que el Kit de Primeros Auxilios sobre la Salud Mental es una herramienta de apoyo. Su función no es diagnosticar ni resolver estas situaciones, sino brindar una primera contención sin indagar y comunicar oportunamente al Matrimonio Codirector.</p>
+        <h3>Introducción</h3>
+        <p>Durante el PFJ es posible que algunos jóvenes atraviesen momentos de mucho malestar emocional. La mayoría de las veces, el primer adulto con quien hablarán será su consejero. Por eso es importante saber cómo acompañarlos durante esos primeros minutos mientras buscamos el apoyo correspondiente.</p>
+        <h3>Ataque de ansiedad o pánico</h3>
+        <p>¿Qué podemos observar? No hace falta memorizar todos los síntomas, lo importante es reconocer señales como:</p>
+        <ul>
+          <li>Respiración agitada o sensación de ahogo.</li>
+          <li>Llanto intenso o dificultad para hablar.</li>
+          <li>Temblores.</li>
+          <li>Sensación de mucho miedo.</li>
+          <li>Mareos.</li>
+        </ul>
+        <p>También pueden aparecer señales previas, como:</p>
+        <ul>
+          <li>Aislamiento.</li>
+          <li>Falta de apetito.</li>
+          <li>Dolor de cabeza o de estómago.</li>
+          <li>Sensación de falta de aire.</li>
+        </ul>
+        <p><b>¿Qué hacer?</b></p>
+        <ul>
+          <li>Llevar al joven a un lugar tranquilo y fresco.</li>
+          <li>Permanecer con él.</li>
+          <li>Hablar con voz calmada.</li>
+          <li>Invitarlo a respirar lentamente: “Inhalamos y Exhalamos”.</li>
+          <li>Ofrecer agua si es posible.</li>
+          <li>Informar al Matrimonio Codirector.</li>
+        </ul>
+        <h3>Autolesiones</h3>
+        <p>“A veces un joven puede expresar deseos de lastimarse o contar que lo ha hecho anteriormente”.</p>
+        <p><b>¿Qué hacer?</b></p>
+        <ul>
+          <li>Escuchar sin juzgar.</li>
+          <li>Permanecer con el joven.</li>
+          <li>Ofrecer alternativas para canalizar lo que siente: Escribir / Dibujar / Caminar / Conversar.</li>
+          <li>Informar inmediatamente al Matrimonio Codirector.</li>
+        </ul>
+        <p><b>¿Qué evitar?</b></p>
+        <ul>
+          <li>No retarlo.</li>
+          <li>No minimizar.</li>
+          <li>No hacer promesas de guardar el secreto.</li>
+        </ul>
+        <h3>Pensamientos suicidas</h3>
+        <p>“Si un joven expresa ideas relacionadas con la muerte o dice que no quiere seguir viviendo, siempre debemos tomarlo con seriedad”.</p>
+        <p><b>¿Qué hacer?</b></p>
+        <ul>
+          <li>Mantener la calma.</li>
+          <li>Llevarlo a un lugar tranquilo.</li>
+          <li>Escucharlo.</li>
+          <li>Hacer preguntas abiertas, por ejemplo: ¿Hace cuánto te sentís así? ¿Comenzó antes o durante PFJ? No profundizar.</li>
+          <li>Reunir la información necesaria: Nombre, Compañía, Barrio, Estaca.</li>
+          <li>Informar inmediatamente al Matrimonio Codirector.</li>
+        </ul>
+        <div class="aviso">No esperamos que tengas todas las respuestas. Esperamos que estés atento, recibas a cada joven con respeto y sepas cuándo pedir ayuda. Tu función es ver, acompañar e informar.</div>
+        <p class="lee"><b>Lee:</b> <a href="https://drive.google.com/file/d/1W20gHPFkH7GxolqbSm8Wpdt2u8NhHeDE/view" target="_blank" rel="noopener">Kit de Primeros Auxilios de Salud Mental</a>.</p>
+        <label class="completar"><input type="checkbox"> Marcar como completado</label>
+      </section>
+
+      <div class="repaso" data-modulo-repaso="2"></div>
+      <div class="modulo__nav"></div>
+    </div>
+
+    <!-- ================= MÓDULO 3 ================= -->
+    <div class="modulo" data-modulo="3" id="modulo-3">
+      <div class="modulo__cabecera"><span>Módulo 3</span><h2>Baile y taller 2</h2></div>
+
+      <section class="seccion" id="baile" data-seccion>
+        <h2>Baile en línea</h2>
+        <p class="meta"><span class="etq">10 min</span><span class="etq">Coordinador Auxiliar del baile</span></p>
+        <p>Repasa los bailes que aprendiste en la primera capacitación y aprende uno nuevo. Elige uno con los botones para ver su paso a paso.</p>
+        <div class="baile" id="baile-selector">
+          <div class="baile__botones" role="tablist" aria-label="Bailes en línea"></div>
+          <div class="video" data-video="baile-1">
+            <div class="poster"><div class="poster__texto">Baile<br>en línea</div><button class="reproducir" aria-label="Reproducir"></button></div>
+          </div>
+        </div>
+        <p><b>ACTIVIDAD:</b> practica uno o dos bailes con alguien más hasta que puedas hacerlos sin mirar el video. Los volveremos a practicar juntos en la sesión recuperativa.</p>
+        <div class="baile__practicados">
+          <p class="baile__pregunta">¿Cuáles practicaste?</p>
+          <div id="baile-practicados"></div>
+        </div>
+        <label class="completar"><input type="checkbox"> Marcar como completado</label>
+      </section>
+
+      <section class="seccion" id="taller-2" data-seccion>
+        <h2>Taller 2: Enseñar sobre Jesucristo independientemente de lo que se enseñe</h2>
+        <p class="meta"><span class="etq">20 min</span><span class="etq">Directora de sesión</span></p>
+        <p>Este taller se basa en la sección <a href="https://www.churchofjesuschrist.org/study/manual/teaching-in-the-saviors-way-2022/04-part-1?lang=spa" target="_blank" rel="noopener">“Centrarse en Jesucristo”</a> del manual <i>Enseñar a la manera del Salvador</i>. Mientras ves el video del élder Dieter F. Uchtdorf, haz una autoevaluación con la <a href="https://drive.google.com/file/d/1u2AdvC-4G_5XYQVKoGj9ozSJVAJ3LMfY/view" target="_blank" rel="noopener">Lista de verificación del maestro</a>, en la parte de centrarse en el Salvador.</p>
+        <div class="video" data-video="esms-jesucristo">
+          <div class="poster"><div class="poster__texto">Centrarse en<br>Jesucristo</div><button class="reproducir" aria-label="Reproducir"></button></div>
+          <p class="video__pie"><b>“Enseñar sobre Jesucristo independientemente de lo que se enseñe”</b><span>Élder Dieter F. Uchtdorf.</span></p>
+        </div>
+        <h3>Enseñar sobre Jesucristo independientemente de lo que se enseñe</h3>
+        <ul>
+          <li>Hacer hincapié en el ejemplo de Jesucristo.</li>
+          <li>Enseñar acerca de los títulos, las funciones y los atributos de Jesucristo.</li>
+          <li>Buscar los símbolos que testifican de Jesucristo.</li>
+        </ul>
+        <h3>Ayudar a los alumnos a venir a Jesucristo</h3>
+        <ul>
+          <li>Ayudar a los alumnos a reconocer el amor, el poder y la misericordia del Señor en sus vidas.</li>
+          <li>Ayudar a los alumnos a fortalecer su relación con el Padre Celestial y Jesucristo.</li>
+          <li>Ayudar a los alumnos a esforzarse intencionalmente por ser más como Jesucristo.</li>
+        </ul>
+        <p>Esto no es solo para las clases: en PFJ puedes enseñar sobre Jesucristo en la noche de juegos, en la actividad de servicio o en una conversación con un joven.</p>
+        <h3>Analiza</h3>
+        <p>Responde estas preguntas en tu diario personal. No tienes que enviarlas: son para ti y puedes compartirlas en la sesión recuperativa.</p>
+        <ol>
+          <li>Mira tu Lista de verificación. ¿Qué principio marcaste como una fortaleza y cuál quieres mejorar antes de PFJ? ¿Qué harás para mejorarlo?</li>
+          <li>Elige una actividad de PFJ que no sea una clase (la noche de juegos, la actividad de servicio, los estandartes). ¿Cómo podrías ayudar a los jóvenes a ver a Jesucristo en ella?</li>
+          <li>¿Qué título, función o atributo de Jesucristo te gustaría que tu compañía conociera mejor durante la semana? ¿En qué momento y cómo lo enseñarías?</li>
+        </ol>
+        <p class="lee"><b>Para prepararte más:</b> <a href="https://www.churchofjesuschrist.org/study/broadcasts/language-recording/2022/05?lang=spa" target="_blank" rel="noopener">capacitación completa del élder Uchtdorf</a>.</p>
+        <label class="completar"><input type="checkbox"> Marcar como completado</label>
+      </section>
+
+      <div class="repaso" data-modulo-repaso="3"></div>
+      <div class="modulo__nav"></div>
+    </div>
+
+    <!-- ================= MÓDULO 4 ================= -->
+    <div class="modulo" data-modulo="4" id="modulo-4">
+      <div class="modulo__cabecera"><span>Módulo 4</span><h2>El día jueves</h2></div>
+
+      <section class="seccion" id="hombres-mujeres-jovenes" data-seccion>
+        <h2>Hombres y Mujeres Jóvenes y espectáculo de variedades</h2>
+        <p class="meta"><span class="etq">Coordinadores Auxiliares</span></p>
+        <h3>Actividad de Hombres y Mujeres Jóvenes</h3>
+        <div class="video" data-video="libro-de-mormon">
+          <div class="poster"><div class="poster__texto">El Libro<br>de Mormón</div><button class="reproducir" aria-label="Reproducir"></button></div>
+          <p class="video__pie"><b>“El Libro de Mormón, otro testamento de Jesucristo”</b><span>Conoce la actividad para que sea más significativa para todos.</span></p>
+        </div>
+        <p>La actividad tiene tres rotaciones:</p>
+        <ol>
+          <li>Devocional matutino y práctica del popurrí.</li>
+          <li>Introducción del Coordinador Auxiliar de la Actividad de Hombres y Mujeres Jóvenes.</li>
+          <li>Actividad en grupo de El Libro de Mormón.</li>
+        </ol>
+        <p><b>ACTIVIDAD:</b> realiza la actividad en grupo de El Libro de Mormón con tu familia o amigos, tal como la harías con los jóvenes. Después piensa cómo guiarás a los participantes para que la vivan como algo espiritual.</p>
+        <h3>Espectáculo de variedades</h3>
+        <div class="video" data-video="espectaculo-variedades">
+          <div class="poster"><div class="poster__texto">Espectáculo de<br>variedades</div><button class="reproducir" aria-label="Reproducir"></button></div>
+          <p class="video__pie"><b>Promoción del espectáculo de variedades</b><span>Video de promoción.</span></p>
+        </div>
+        <p>Repasa las pautas para que puedas animar a los jóvenes de tu grupo a participar y ayudarlos a preparar sus presentaciones.</p>
+        <p class="lee"><b>Lee:</b> Manual para el Participante, páginas 78 y 104.</p>
+        <label class="completar"><input type="checkbox"> Marcar como completado</label>
+      </section>
+
+      <section class="seccion" id="reverencia-musical" data-seccion>
+        <h2>Reverencia y programa musical</h2>
+        <h3>Análisis sobre la reverencia y el testimonio</h3>
+        <p>Lee <a href="https://www.churchofjesuschrist.org/study/scriptures/dc-testament/dc/88?lang=spa&id=p67-p68#p67" target="_blank" rel="noopener">Doctrina y Convenios 88:67–68</a> y medita en la doctrina y el propósito de la reverencia. En esta actividad, los consejeros:</p>
+        <ul>
+          <li>Comienzan con un himno y leen Doctrina y Convenios 88:67–68.</li>
+          <li>Analizan la doctrina y el propósito de la reverencia.</li>
+          <li>Enseñan a los jóvenes que la reverencia no es solo estar callado, sino que es una condición del ser.</li>
+          <li>Ayudan a los jóvenes a entender cómo la reverencia los ayudará a recibir revelación.</li>
+          <li>Ayudan a los jóvenes a entender lo que es y lo que no es un testimonio.</li>
+          <li>Invitan a los jóvenes a pensar en lo que han aprendido durante el día y cómo pueden seguir preparándose para las actividades vespertinas y para la reunión de testimonios.</li>
+        </ul>
+        <p class="lee"><b>Lee:</b> Manual para el Personal, página 60; Manual para el Participante, páginas 80–81.</p>
+        <h3>Programa musical</h3>
+        <div class="video" data-video="programa-musical">
+          <div class="poster"><div class="poster__texto">Programa<br>musical</div><button class="reproducir" aria-label="Reproducir"></button></div>
+          <p class="video__pie"><b>Promoción del programa musical</b><span>Video de promoción.</span></p>
+        </div>
+        <p>Responsabilidades de los consejeros en el programa musical:</p>
+        <ul>
+          <li>Encargados del programa musical y de su preparación espiritual: un Coordinador Auxiliar y 2 o 3 consejeros ayudantes.</li>
+          <li>Promoción del programa musical: antes, durante y después del registro de llegada.</li>
+          <li>Audiciones de lectores y solos.</li>
+          <li>Ensayos, horarios, lugar y ejecución del programa musical.</li>
+          <li>El jueves los jóvenes pasan gran parte del día ensayando, por eso el análisis sobre la reverencia y el testimonio de ese día lo dirigen los consejeros asignados al programa musical. Así los jóvenes no tienen que volver a su compañía solo para ese análisis.</li>
+        </ul>
+        <p class="lee"><b>Lee:</b> Manual para el Personal, páginas 17 y 95–97 (estúdialas con especial atención; “Preparación” está en la página 95).</p>
+        <label class="completar"><input type="checkbox"> Marcar como completado</label>
+      </section>
+
+      <section class="seccion" id="testimonios" data-seccion>
+        <h2>Devocional vespertino y reunión de testimonios</h2>
+        <h3>Devocional vespertino</h3>
+        <div class="video" data-video="apertura-testimonios">
+          <div class="poster"><div class="poster__texto">Apertura de<br>testimonios</div><button class="reproducir" aria-label="Reproducir"></button></div>
+          <p class="video__pie"><b>Apertura de testimonios</b><span>Por ahora está disponible el video de PFJ 2026, del élder y la hermana Renlund. El de PFJ 2027, del élder y la hermana Caussé, se agregará cuando esté disponible.</span></p>
+        </div>
+        <p>Después del devocional vespertino hay un tiempo para que los jóvenes escriban su testimonio en su diario personal.</p>
+        <p class="lee"><b>Lee:</b> Manual para el Personal, página 195; Manual para el Participante, página 87.</p>
+        <h3>Invitación a guardar la reverencia y reunión de testimonios</h3>
+        <p>Repasa tus responsabilidades en la reunión de testimonios y qué es un testimonio, con las sugerencias del Manual para el Participante. Así podrás ayudar al joven que siente que “no tiene testimonio”.</p>
+        <p class="lee"><b>Lee:</b> Manual para el Personal, página 17; Manual para el Participante, página 82.</p>
+        <p><b>ACTIVIDAD:</b> escribe tu propio testimonio en tu diario, como lo harán los jóvenes esa noche.</p>
+        <label class="completar"><input type="checkbox"> Marcar como completado</label>
+      </section>
+
+      <div class="repaso" data-modulo-repaso="4"></div>
+      <div class="modulo__nav"></div>
+    </div>
+
+    <!-- ================= MÓDULO 5 ================= -->
+    <div class="modulo" data-modulo="5" id="modulo-5">
+      <div class="modulo__cabecera"><span>Módulo 5</span><h2>Taller 3 y mensaje final</h2></div>
+
+      <section class="seccion" id="taller-3" data-seccion>
+        <h2>Taller 3: Amar a quienes enseña</h2>
+        <p class="meta"><span class="etq">15 min</span><span class="etq">Codirectora de sesión</span></p>
+        <p>Este taller se basa en la sección <a href="https://www.churchofjesuschrist.org/study/manual/teaching-in-the-saviors-way-2022/07-part-2/08-love-those-you-teach?lang=spa" target="_blank" rel="noopener">“Amar a quienes enseña”</a> del manual <i>Enseñar a la manera del Salvador</i>. Mientras ves el video del élder Dieter F. Uchtdorf, haz una autoevaluación con la <a href="https://drive.google.com/file/d/1u2AdvC-4G_5XYQVKoGj9ozSJVAJ3LMfY/view" target="_blank" rel="noopener">Lista de verificación del maestro</a>, en la parte de amar a quienes enseñas.</p>
+        <div class="video" data-video="esms-amar">
+          <div class="poster"><div class="poster__texto">Amar a quienes<br>enseña</div><button class="reproducir" aria-label="Reproducir"></button></div>
+          <p class="video__pie"><b>“Amar a quienes enseña”</b><span>Élder Dieter F. Uchtdorf.</span></p>
+        </div>
+        <ul>
+          <li>El Salvador veía el potencial divino de todas las personas a las que enseñaba.</li>
+          <li>El Salvador nos conoce y comprende nuestras circunstancias, necesidades y fortalezas.</li>
+          <li>El Salvador oraba por aquellos a quienes enseñaba.</li>
+          <li>El Salvador se aseguraba de que todos se sintieran respetados y valorados.</li>
+          <li>El Salvador expresaba Su amor por aquellos a quienes enseñaba.</li>
+        </ul>
+        <h3>Analiza</h3>
+        <p>Responde estas preguntas en tu diario personal. No tienes que enviarlas: son para ti y puedes compartirlas en la sesión recuperativa.</p>
+        <ol>
+          <li>Mira tu Lista de verificación. ¿En qué parte de amar a quienes enseñas estás más fuerte y en cuál quieres mejorar?</li>
+          <li>El Salvador oraba por aquellos a quienes enseñaba. ¿Cómo puedes empezar a orar por los jóvenes de tu compañía desde antes de conocerlos y, durante la semana, por cada uno por su nombre?</li>
+          <li>Piensa en un joven que llega sin conocer a nadie y se queda al margen. ¿Qué harías el primer día para que se sienta respetado, valorado y parte de la compañía?</li>
+        </ol>
+        <p class="lee"><b>Para prepararte más:</b> <a href="https://www.churchofjesuschrist.org/study/broadcasts/language-recording/2022/05?lang=spa" target="_blank" rel="noopener">capacitación completa del élder Uchtdorf</a>.</p>
+        <label class="completar"><input type="checkbox"> Marcar como completado</label>
+      </section>
+
+      <section class="seccion" id="mensaje-final" data-seccion>
+        <h2>Reflexionar. Analizar. Anotar.</h2>
+        <p>“Reflexiona sobre las cosas que has recibido” (Doctrina y Convenios 30:3). Medita en estas preguntas y anota tus impresiones en tu cuaderno personal:</p>
+        <ul>
+          <li>¿En qué momentos del miércoles y del jueves tendrás más oportunidades de enseñar sobre Jesucristo?</li>
+          <li>¿Qué joven de tu futura compañía podría necesitar más tu amor y tu atención durante esos días?</li>
+          <li>¿Cómo te estás preparando espiritualmente para la reunión de testimonios?</li>
+        </ul>
+        <h2 style="margin-top:56px">Mensaje final: Allegaos a mí</h2>
+        <p class="meta"><span class="etq">10 min</span><span class="etq">Director de sesión</span></p>
+        <div class="video" data-video="c2-mensaje-final">
+          <div class="poster"><div class="poster__texto">Allegaos<br>a mí</div><button class="reproducir" aria-label="Reproducir"></button></div>
+          <p class="video__pie"><b>Mensaje final</b><span>El Director de sesión comparte un mensaje basado en el discurso “Sigue al profeta, lo que él dice manda el Señor”, del élder Michael John U. Teh, de los Setenta.</span></p>
+        </div>
+        <p class="lee"><b>Lee:</b> <a href="https://www.churchofjesuschrist.org/study/general-conference/2026/04/17teh?lang=spa" target="_blank" rel="noopener">“Sigue al profeta, lo que él dice manda el Señor”</a>, élder Michael John U. Teh.</p>
+        <label class="completar"><input type="checkbox"> Marcar como completado</label>
+      </section>
+
+      <div class="repaso" data-modulo-repaso="5"></div>
+
+      <section class="final" id="finalizar">
+        <h2>Terminar la capacitación</h2>
+        <p>Tu avance se ha ido guardando en este dispositivo, pero <b>todavía no se ha enviado</b>. Cuando termines todo, presiona <b>Finalizar y enviar</b> y los coordinadores de tu sesión recibirán tu capacitación completa.</p>
+        <div id="final-resumen"></div>
+        <button type="button" class="boton-rojo boton-grande" id="final-enviar">Finalizar y enviar</button>
+        <div id="final-confirmacion"></div>
+      </section>
+
+      <div class="modulo__nav"></div>
+    </div>
+
+    <section class="seccion" id="sesion-recuperativa">
+      <h2>Sesión recuperativa</h2>
+      <p>Si hiciste esta capacitación en línea en lugar de la presencial, debes asistir a la sesión recuperativa de tu sesión. Allí:</p>
+      <ul>
+        <li>Repasaremos juntos todas las actividades de los días miércoles y jueves.</li>
+        <li>Resolveremos tus dudas.</li>
+        <li>Practicaremos el baile en línea y uno de los juegos de la noche de juegos.</li>
+        <li>Haremos la actividad en grupo de El Libro de Mormón como la harán los jóvenes.</li>
+      </ul>
+      <p>Tu capacitación se considera completa cuando terminaste los 5 módulos de esta página <b>y</b> asististe a la sesión recuperativa.</p>
+      <div class="info-sesion" data-info-sesion="recuperativa"></div>
+    </section>
+
+    <section class="seccion recursos" id="recursos">
+      <h2>Recursos adicionales</h2>
+      <p><a href="https://drive.google.com/file/d/1gMMJwdW0VMMgAQ35rD9IWb-vpWbddcn7/view" target="_blank" rel="noopener">Manual para el Personal PFJ 2027</a></p>
+      <p><a href="https://drive.google.com/file/d/1OS5hASzBE1O5YT9IC5XLMLdDh74hc2f5/view" target="_blank" rel="noopener">Manual del Participante PFJ 2027</a></p>
+      <p><a href="https://drive.google.com/file/d/1RaNx11VzeKn9syxfIcDFV1O0mD9TjqjN/view" target="_blank" rel="noopener">Guía de Aplicación del Manual para el Personal al Área</a></p>
+      <p><a href="https://drive.google.com/file/d/1ayYkU77bxAWslm8fJIi05kfkw4kbztsv/view" target="_blank" rel="noopener">Horario PFJ 2027 – Regocíjate en Cristo</a></p>
+      <p><a href="https://drive.google.com/file/d/1rNqKDnuiVbt671ZTHqJ0KuZ7vm3z794E/view" target="_blank" rel="noopener">Instrucciones de la actividad Compartir el Evangelio</a></p>
+      <p><a href="https://drive.google.com/drive/folders/1IkRnow-jGqYxIj5dJ61CcLQYh-Q72mbx" target="_blank" rel="noopener">Actividad de servicio</a></p>
+      <p><a href="https://drive.google.com/drive/folders/15IDEdQyJWtRZHQ6koFAHymyk14I18M8A" target="_blank" rel="noopener">Música y videos del baile en línea</a></p>
+      <p><a href="https://www.churchofjesuschrist.org/study/manual/teaching-in-the-saviors-way-2022?lang=spa" target="_blank" rel="noopener">Enseñar a la manera del Salvador</a></p>
+      <p><a href="https://drive.google.com/file/d/1u2AdvC-4G_5XYQVKoGj9ozSJVAJ3LMfY/view" target="_blank" rel="noopener">Lista de verificación del maestro</a></p>
+      <p><a href="https://drive.google.com/file/d/1W20gHPFkH7GxolqbSm8Wpdt2u8NhHeDE/view" target="_blank" rel="noopener">Kit de Primeros Auxilios de Salud Mental</a></p>
+      <p><a href="https://www.churchofjesuschrist.org/callings/church-safety-and-health/protecting-children-and-youth?lang=spa" target="_blank" rel="noopener">Cómo proteger a los niños y a los jóvenes</a></p>
+      <p><a href="index.html">← Volver a la capacitación en línea</a></p>
+    </section>
+  </div>
+</main>
+
+<footer class="pie">Capacitación para consejeros · PFJ 2027</footer>
+
+<script src="app.js"></script>
+</body>
+</html>

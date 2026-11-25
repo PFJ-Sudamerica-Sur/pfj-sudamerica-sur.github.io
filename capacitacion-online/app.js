@@ -11,12 +11,23 @@ const CONFIG = {
   // URL del Apps Script publicado como aplicación web (termina en /exec).
   // Mientras esté vacía, se usa datos.json y todo se guarda solo en el dispositivo.
   ENDPOINT: "https://script.google.com/macros/s/AKfycbz_uyMMsfadB0P6B9SPKAzrLJNQawYL0zOjWoUSAW40qNIFWK3pKv3yubR1O2ZbmJ4kLw/exec",
-  CAPACITACION: "C1"
+  // Cada página dice qué capacitación es: <body data-capacitacion="C2">. Sin el atributo, es la primera.
+  CAPACITACION: document.body.dataset.capacitacion || "C1"
 };
 
 const CLAVE = "pfj2027-" + CONFIG.CAPACITACION;
 const estado = JSON.parse(localStorage.getItem(CLAVE) || "{}");
 estado.secciones ||= {}; estado.repasos ||= {}; estado.bailes ||= []; estado.respuestas ||= {};
+// Si el consejero ya se registró en otra capacitación en este dispositivo, se usan los mismos datos.
+if (!estado.consejero) {
+  for (const c of ["C1", "C2", "C3"]) {
+    if (c === CONFIG.CAPACITACION) continue;
+    try { const otro = JSON.parse(localStorage.getItem("pfj2027-" + c) || "{}").consejero; if (otro) { estado.consejero = otro; break; } } catch (e) { /* nada */ }
+  }
+}
+// Las preguntas de la 1ª usan el número del módulo ("1"); las demás, "C2-1", "C3-1"…
+const etiquetaModulo = (n) => (CONFIG.CAPACITACION === "C1" ? String(n) : `${CONFIG.CAPACITACION}-${n}`);
+const capDePregunta = (q) => { const m = String(q.modulo).match(/^(C\d+)-/); return m ? m[1] : "C1"; };
 const guardar = () => localStorage.setItem(CLAVE, JSON.stringify(estado));
 const $ = (s, r = document) => r.querySelector(s);
 const $$ = (s, r = document) => [...r.querySelectorAll(s)];
@@ -32,7 +43,16 @@ async function cargarDatos() {
     if (r && r.ok && r.datos) {
       Object.entries(r.datos).forEach(([k, v]) => {
         const vacio = v == null || (Array.isArray(v) ? !v.length : typeof v === "object" && !Object.keys(v).length);
-        if (!vacio) DATOS[k] = v;
+        if (vacio) return;
+        if (k === "videos") {
+          // Lo del panel manda; los videos nuevos que aún no están en el panel se toman de datos.json
+          const enPanel = new Set(v.map((x) => x.clave));
+          DATOS.videos = [...v, ...DATOS.videos.filter((x) => !enPanel.has(x.clave))];
+        } else if (k === "preguntas") {
+          // El panel reemplaza las preguntas de cada capacitación que tenga escritas allí, sin borrar las demás
+          const caps = new Set(v.map(capDePregunta));
+          DATOS.preguntas = [...v, ...DATOS.preguntas.filter((q) => !caps.has(capDePregunta(q)))];
+        } else DATOS[k] = v;
       });
     }
   } catch (e) { /* si el panel no responde, se usa datos.json */ }
@@ -68,25 +88,31 @@ function videoPara(clave) {
   const vs = DATOS.videos.filter((v) => v.clave === clave && v.enlace);
   return vs.find((v) => v.sesion && v.sesion === ses) || vs.find((v) => !v.sesion);
 }
+// Como en la página de la Iglesia: primero se ve la portada con el título; al hacer clic, aparece el video.
+function abrirVideo(cont) {
+  const src = cont.dataset.src;
+  if (!src || $(".video__marco", cont)) return;
+  const conPlay = src.includes("youtube") ? src + "&autoplay=1" : src.includes("vimeo") ? src + "?autoplay=1" : src;
+  const div = document.createElement("div");
+  div.className = "video__marco";
+  div.innerHTML = `<iframe src="${esc(conPlay)}" title="${esc(cont.dataset.titulo || "Video")}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`;
+  cont.insertBefore(div, cont.firstChild);
+  const poster = $(".poster", cont);
+  if (poster) poster.hidden = true;
+}
 function pintarVideos() {
   $$(".video[data-video]").forEach((cont) => {
     const v = videoPara(cont.dataset.video);
-    const src = v && urlVideo(v.enlace);
-    const poster = $(".poster", cont), marco = $(".video__marco", cont);
-    if (src) {
-      if (!marco || marco.dataset.src !== src) {
-        marco?.remove();
-        const div = document.createElement("div");
-        div.className = "video__marco"; div.dataset.src = src;
-        div.innerHTML = `<iframe src="${esc(src)}" title="${esc(v.titulo || "Video")}" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`;
-        cont.insertBefore(div, cont.firstChild);
-      }
-      if (poster) poster.hidden = true;
-      cont.classList.remove("video--pendiente");
-    } else {
-      marco?.remove();
-      if (poster) poster.hidden = false;
-      cont.classList.add("video--pendiente");
+    const src = (v && urlVideo(v.enlace)) || "";
+    const poster = $(".poster", cont);
+    if (cont.dataset.src === src && src) return; // ya está listo (o abierto)
+    $(".video__marco", cont)?.remove();
+    cont.dataset.src = src; cont.dataset.titulo = v?.titulo || "";
+    if (poster) poster.hidden = false;
+    cont.classList.toggle("video--pendiente", !src);
+    if (poster && !poster.dataset.clic) {
+      poster.dataset.clic = "1";
+      poster.addEventListener("click", () => abrirVideo(cont));
     }
   });
 }
@@ -240,8 +266,10 @@ function iniciarModulos() {
   modulos().forEach((m, i) => {
     const nav = $(".modulo__nav", m), lista = modulos();
     const ant = lista[i - 1], sig = lista[i + 1];
+    // Desde cualquier módulo se puede saltar directo a "Terminar la capacitación"
+    const alFinal = sig && $("#finalizar") ? `<a class="boton-borde" href="#finalizar">Ir al final ⇥</a>` : "";
     nav.innerHTML = (ant ? `<a class="boton-borde" href="#modulo-${ant.dataset.modulo}">← Módulo ${ant.dataset.modulo}</a>` : `<span></span>`) +
-      (sig ? `<a class="boton-rojo" href="#modulo-${sig.dataset.modulo}">Siguiente: Módulo ${sig.dataset.modulo} →</a>` : `<span></span>`);
+      (sig ? `<span class="modulo__nav-der">${alFinal}<a class="boton-rojo" href="#modulo-${sig.dataset.modulo}">Siguiente: Módulo ${sig.dataset.modulo} →</a></span>` : `<span></span>`);
   });
   window.addEventListener("hashchange", () => irAHash(true));
   irAHash(!!location.hash);
@@ -280,7 +308,7 @@ function iniciarSecciones() {
 function iniciarRepasos() {
   $$("[data-modulo-repaso]").forEach((cont) => {
     const m = cont.dataset.moduloRepaso;
-    const preguntas = DATOS.preguntas.filter((q) => String(q.modulo) === m && q.pregunta && q.opciones?.length >= 2);
+    const preguntas = DATOS.preguntas.filter((q) => String(q.modulo) === etiquetaModulo(m) && q.pregunta && q.opciones?.length >= 2);
     if (!preguntas.length) { cont.innerHTML = ""; return; }
     const previo = estado.repasos[m];
     cont.innerHTML = `<p class="repaso__titulo"><span>Repaso del módulo ${esc(m)}</span><span class="repaso__puntaje"></span></p>`;
@@ -327,6 +355,8 @@ function iniciarBailes() {
     `<button type="button" role="tab" class="baile__btn" data-clave="${esc(b.clave)}"><span>Baile ${i + 1}</span>${esc(b.titulo)}</button>`).join("");
   const elegir = (clave) => {
     video.dataset.video = clave;
+    const texto = $(".poster__texto", video), b = bailes.find((x) => x.clave === clave);
+    if (texto && b) texto.textContent = b.titulo;
     $$(".baile__btn", botones).forEach((b) => b.setAttribute("aria-selected", b.dataset.clave === clave));
     pintarVideos();
   };
@@ -348,7 +378,7 @@ function resumenAvance() {
     const n = m.dataset.modulo;
     const ss = $$("[data-seccion]", m);
     const hechas = ss.filter((s) => estado.secciones[s.id]).length;
-    const tienePreguntas = DATOS.preguntas.some((q) => String(q.modulo) === n);
+    const tienePreguntas = DATOS.preguntas.some((q) => String(q.modulo) === etiquetaModulo(n));
     const rep = estado.repasos[n];
     return { n, titulo: $(".modulo__cabecera h2", m).textContent, hechas, total: ss.length,
              repaso: rep, listo: hechas === ss.length && (!tienePreguntas || !!rep) };
