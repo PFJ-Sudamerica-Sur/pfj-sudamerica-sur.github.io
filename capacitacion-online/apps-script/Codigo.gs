@@ -342,10 +342,11 @@ function construirResumen_(ss, maestra) {
     ["D30", "Consejeros que terminaron"],
     ["D31", "=IFERROR(QUERY(Informe!A2:Q;\"select C, G, I, P, A where C is not null order by C label C 'Nombre', G 'Estaca', I 'Modalidad', P '% correctas', A 'Fecha de envío'\";0);\"Todavía no hay envíos\")"]
   ];
-  // setFormula usa nombres en inglés y comas; las reemplazamos aquí para no depender del idioma de la planilla
+  // El separador de argumentos depende del idioma de la planilla: ";" en español/portugués, "," en inglés
+  const sep = /^(en|ja|zh|ko|th|he|hi)/.test(ss.getSpreadsheetLocale() || "") ? "," : ";";
   celdas.forEach(([ref, v]) => {
     const r = h.getRange(ref);
-    if (String(v).startsWith("=")) r.setFormula(String(v).replace(/;/g, ",")); else r.setValue(v);
+    if (String(v).startsWith("=")) r.setFormula(String(v).replace(/;/g, sep)); else r.setValue(v);
   });
 
   h.getRange("A1").setFontSize(14).setFontWeight("bold");
