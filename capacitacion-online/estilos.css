@@ -1,0 +1,241 @@
+/* Estilos basados en la página de capacitación en línea de FSY (es.laiglesiadejesucristo.org) */
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;1,700&family=Roboto+Slab:wght@400;500&family=Oswald:wght@500;600&family=Libre+Caslon+Text:wght@400;700&display=swap');
+
+:root {
+  --rojo: #d50032;          /* rojo de botones del sitio */
+  --texto: #333333;
+  --negro: #000000;
+  --enlace: #147ea7;        /* rgb(20,126,167) */
+  --linea: #a2aaad;         /* rgb(162,170,173) */
+  --gris-suave: #f4f4f4;
+  --gris-medio: #6b7477;
+  --poster: #00627f;        /* azul petróleo de los títulos en video */
+  --pfj-amarillo: #f9c80e;
+  --pfj-naranja: #fbb040;
+  --pfj-azul: #0b4f77;
+  --pfj-celeste: #1a9cc2;
+  --pfj-verde: #0f8f45;
+  --pfj-oliva: #a9b93a;
+  --col: 606px;             /* ancho de la columna de lectura */
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  font-family: "Open Sans", "Noto Sans", Helvetica, Arial, sans-serif;
+  font-size: 18px;
+  line-height: 1.6;
+  font-weight: 300;
+  color: var(--texto);
+  background: #fff;
+}
+a { color: var(--enlace); text-decoration: none; }
+a:hover { text-decoration: underline; }
+strong, b { font-weight: 700; }
+
+/* ---------- Encabezado ---------- */
+.cabecera {
+  position: sticky; top: 0; z-index: 20;
+  background: #fff;
+  border-bottom: 1px solid #e3e3e3;
+}
+.cabecera__fila {
+  display: grid; grid-template-columns: 1fr auto 1fr; align-items: center;
+  height: 58px;
+}
+.cabecera__menu {
+  width: 58px; height: 58px; background: var(--rojo); border: 0; cursor: pointer;
+  display: grid; place-items: center;
+}
+.cabecera__menu span, .cabecera__menu span::before, .cabecera__menu span::after {
+  display: block; width: 18px; height: 2px; background: #fff; position: relative; content: "";
+}
+.cabecera__menu span::before { position: absolute; top: -6px; }
+.cabecera__menu span::after  { position: absolute; top: 6px; }
+.marca {
+  font-family: "Libre Caslon Text", Georgia, serif; color: var(--negro);
+  text-align: center; line-height: 1; text-transform: uppercase; letter-spacing: .02em;
+}
+.marca__1, .marca__3 { display: block; font-size: 9px; }
+.marca__2 { display: block; font-size: 16px; margin: 1px 0; }
+.cabecera__acciones { display: flex; justify-content: flex-end; align-items: center; gap: 18px; padding-right: 16px; font-size: 13px; font-weight: 400; }
+.boton-rojo {
+  background: var(--rojo); color: #fff; border: 0; border-radius: 3px;
+  padding: 7px 14px; font: 400 14px "Open Sans", sans-serif; cursor: pointer;
+}
+.boton-rojo:hover { text-decoration: none; filter: brightness(.93); }
+
+.subnav {
+  display: flex; align-items: center; gap: 30px; height: 42px; padding: 0 24px;
+  border-top: 1px solid #ececec; font-size: 13px; font-weight: 400; color: var(--texto);
+  overflow-x: auto; white-space: nowrap; scrollbar-width: none;
+}
+.subnav::-webkit-scrollbar { display: none; }
+.subnav__pais { font-weight: 700; font-size: 12px; color: var(--negro); letter-spacing: .02em; margin-right: 10px; }
+.subnav a { color: var(--texto); }
+.subnav a.activo { color: var(--negro); font-weight: 600; box-shadow: inset 0 -2px 0 var(--negro); padding: 11px 0; }
+
+/* ---------- Bloques de título ---------- */
+.titulo-bloque { max-width: var(--col); margin: 70px auto 24px; padding: 0 16px; text-align: center; }
+.titulo-bloque h1 {
+  font-family: "Roboto Slab", Helvetica, Arial, serif; font-weight: 500;
+  font-size: 36px; line-height: 1.2; color: var(--texto); margin: 0 0 18px;
+}
+.titulo-bloque .cita { font-size: 16px; line-height: 1.6; margin: 0; }
+.compartir { display: flex; justify-content: center; gap: 22px; margin: 22px 0 30px; }
+.compartir span { width: 22px; height: 22px; border-radius: 3px; background: var(--enlace); opacity: .9; }
+
+.ancho { max-width: 1000px; margin: 0 auto; padding: 0 16px; }
+.columna { max-width: var(--col); margin: 0 auto; padding: 0 16px; }
+
+/* ---------- Video / póster ---------- */
+.video { position: relative; margin: 0 0 8px; }
+.poster {
+  aspect-ratio: 16 / 9; width: 100%; position: relative; overflow: hidden;
+  display: grid; place-items: center; text-align: center; background: #fff;
+}
+.poster__texto {
+  font-family: "Oswald", Impact, sans-serif; font-weight: 600; text-transform: uppercase;
+  color: var(--poster); font-size: clamp(34px, 8vw, 62px); line-height: .95; letter-spacing: .005em;
+  padding: 0 10%;
+}
+.poster--hero { background: linear-gradient(135deg, #f7b733 0%, #fbb040 45%, #f9c80e 100%); }
+.poster--hero .poster__texto { color: #fff; font-size: clamp(40px, 9vw, 86px); text-shadow: 0 2px 18px rgba(0,0,0,.12); }
+.poster--hero .poster__sub { display:block; font-family:"Open Sans",sans-serif; font-weight:600; font-size: 20px; letter-spacing:.04em; text-transform:none; margin-top: 12px; }
+.reproducir {
+  position: absolute; left: 3%; bottom: 7%; width: 38px; height: 38px; border-radius: 50%;
+  background: #b9b9b9; display: grid; place-items: center; border: 0;
+}
+.poster--hero .reproducir { background: rgba(0,0,0,.55); width: 46px; height: 46px; }
+.reproducir::after { content: ""; border-left: 13px solid #fff; border-top: 8px solid transparent; border-bottom: 8px solid transparent; margin-left: 4px; }
+.video__pie { font-size: 13px; line-height: 1.45; margin: 10px 0 0; }
+.video__pie b { display: block; color: var(--negro); }
+.video__pie span { color: var(--gris-medio); font-weight: 600; }
+.video__quien { font-size: 12px; font-weight: 600; color: var(--gris-medio); }
+.lista-videos .video { margin-bottom: 46px; }
+
+/* ---------- Secciones del módulo ---------- */
+.seccion { margin: 56px 0 0; scroll-margin-top: 120px; }
+.seccion > h2 {
+  font-family: "Open Sans", sans-serif; font-weight: 700; font-size: 20px; letter-spacing: .01em;
+  text-transform: uppercase; color: var(--texto); margin: 0 0 18px; line-height: 1.3;
+}
+.seccion h3 { font-weight: 700; font-size: 18px; color: var(--negro); margin: 34px 0 8px; }
+.seccion p { margin: 0 0 16px; }
+.seccion ul, .seccion ol { padding-left: 22px; margin: 0 0 18px; }
+.seccion li { margin-bottom: 6px; }
+.meta { font-size: 13px; color: var(--gris-medio); font-weight: 600; margin: -10px 0 18px; }
+.meta .etq { display: inline-block; border: 1px solid var(--linea); border-radius: 2px; padding: 0 7px; margin-right: 6px; font-weight: 600; }
+.lee { font-size: 15px; background: var(--gris-suave); border-left: 3px solid var(--linea); padding: 12px 16px; margin: 0 0 18px; }
+.lee b { color: var(--negro); }
+blockquote { margin: 0 0 18px; padding: 0 0 0 18px; border-left: 3px solid var(--linea); font-style: italic; }
+
+/* nota del equipo de sesión */
+.nota-staff { font-size: 14px; border: 1px dashed var(--linea); padding: 12px 16px; margin: 0 0 18px; }
+.nota-staff b { color: var(--rojo); font-weight: 700; text-transform: uppercase; font-size: 12px; letter-spacing: .04em; display: block; margin-bottom: 4px; }
+
+/* completado */
+.completar { display: flex; align-items: center; gap: 10px; font-size: 14px; font-weight: 600; color: var(--texto); margin: 22px 0 0; cursor: pointer; user-select: none; }
+.completar input { width: 18px; height: 18px; accent-color: var(--rojo); }
+
+/* separador tipo sitio */
+.regla { border: 0; border-top: 1px solid var(--linea); margin: 56px 0 0; }
+
+/* índice del módulo */
+.indice { border-top: 1px solid var(--linea); border-bottom: 1px solid var(--linea); padding: 18px 0; margin: 30px 0 0; }
+.indice__titulo { font-weight: 700; font-size: 14px; text-transform: uppercase; letter-spacing: .03em; margin: 0 0 10px; display: flex; justify-content: space-between; }
+.indice ol { margin: 0; padding-left: 22px; font-size: 15px; columns: 2; column-gap: 30px; }
+.indice li { break-inside: avoid; margin-bottom: 4px; }
+.indice li.hecho a { color: var(--gris-medio); text-decoration: line-through; }
+.barra { height: 6px; background: #e6e6e6; border-radius: 3px; overflow: hidden; margin-top: 14px; }
+.barra span { display: block; height: 100%; width: 0; background: var(--rojo); transition: width .3s; }
+
+/* repaso interactivo */
+.pregunta { border-top: 1px solid var(--linea); padding: 18px 0 6px; }
+.pregunta p { font-weight: 600; margin-bottom: 10px; }
+.opcion { display: block; width: 100%; text-align: left; background: #fff; border: 1px solid var(--linea); border-radius: 3px; padding: 9px 14px; margin: 0 0 8px; font: 300 16px "Open Sans", sans-serif; color: var(--texto); cursor: pointer; }
+.opcion:hover { border-color: var(--texto); }
+.opcion.ok { border-color: var(--pfj-verde); background: #eef8f2; font-weight: 600; }
+.opcion.mal { border-color: var(--rojo); background: #fdf0f3; }
+.explica { font-size: 14px; color: var(--gris-medio); display: none; margin: 4px 0 10px; }
+.explica.ver { display: block; }
+
+/* recursos */
+.recursos p { margin: 0 0 14px; }
+
+/* ---------- Mosaico de la portada ---------- */
+.intro-texto { max-width: 800px; margin: 34px auto 0; text-align: center; padding: 0 16px; }
+.mosaico { display: grid; grid-template-columns: repeat(3, 1fr); gap: 26px; margin: 48px auto 0; }
+.ficha { border-bottom: 1px solid var(--linea); padding-bottom: 18px; }
+.ficha__img { aspect-ratio: 16 / 10; display: grid; place-items: center; position: relative; overflow: hidden; }
+.ficha__img .pfj { font: 700 64px/1 "Open Sans", sans-serif; color: #fff; letter-spacing: -.04em; }
+.ficha__img .num { position: absolute; right: 14px; bottom: 6px; font: 600 54px/1 "Oswald", sans-serif; color: rgba(255,255,255,.85); }
+.ficha__img.prox::after { content: "Próximamente"; position: absolute; top: 12px; left: 12px; font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; background: rgba(255,255,255,.92); color: var(--texto); padding: 2px 8px; }
+.ficha h3 { margin: 14px 0 6px; font-weight: 700; font-style: italic; font-size: 22px; line-height: 1.25; }
+.ficha h3 a { color: var(--texto); }
+.ficha p { font-size: 15px; margin: 0; }
+.img-1 { background: linear-gradient(135deg, #fde7a3 0%, #f9c80e 55%, #fbb040 100%); }
+.img-2 { background: linear-gradient(135deg, #47b6d3 0%, #0b6f9a 50%, #0b3f66 100%); }
+.img-3 { background: linear-gradient(135deg, #c6c95a 0%, #6aa23f 50%, #0f8f45 100%); }
+.img-a { background: linear-gradient(135deg, #e9e9e9 0%, #c9cfd1 100%); }
+.img-a .pfj, .img-b .pfj { color: var(--texto); font-size: 30px; font-weight: 700; letter-spacing: 0; text-align: center; padding: 0 12px; }
+.img-b { background: linear-gradient(135deg, #f6e9ee 0%, #e7c6d1 100%); }
+.img-c { background: linear-gradient(135deg, #e3eef4 0%, #b9d4e2 100%); }
+.img-c .pfj { color: var(--poster); font-size: 30px; letter-spacing: 0; text-align: center; padding: 0 12px; }
+
+.pasos { counter-reset: paso; list-style: none; padding: 0; margin: 0; }
+.pasos li { counter-increment: paso; position: relative; padding: 0 0 16px 48px; }
+.pasos li::before { content: counter(paso); position: absolute; left: 0; top: 0; width: 32px; height: 32px; border-radius: 50%; border: 1px solid var(--linea); display: grid; place-items: center; font-weight: 600; font-size: 15px; }
+
+/* ---------- Barra superior simple (sin marca) ---------- */
+.barra-sup { height: 6px; background: linear-gradient(90deg, var(--pfj-naranja), var(--pfj-amarillo)); }
+
+/* ---------- Registro del consejero ---------- */
+.registro { border: 1px solid var(--linea); padding: 20px 22px; margin: 30px 0 0; }
+.registro h2 { font-size: 16px; font-weight: 700; text-transform: uppercase; letter-spacing: .02em; margin: 0 0 6px; }
+.registro p { font-size: 15px; margin: 0 0 14px; }
+.campos { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.campos label { font-size: 13px; font-weight: 600; display: block; }
+.campos input, .campos select, .tarea textarea {
+  width: 100%; font: 300 16px "Open Sans", sans-serif; color: var(--texto);
+  border: 1px solid var(--linea); border-radius: 3px; padding: 8px 10px; margin-top: 4px; background: #fff;
+}
+.registro .boton-rojo { margin-top: 14px; }
+.registro--ok { background: var(--gris-suave); border-color: var(--gris-suave); }
+.registro--ok .campos, .registro--ok .boton-rojo { display: none; }
+.registro__saludo { display: none; font-size: 15px; }
+.registro--ok .registro__saludo { display: block; }
+.registro__saludo button { background: none; border: 0; color: var(--enlace); font: inherit; cursor: pointer; padding: 0; }
+
+/* ---------- Tareas ---------- */
+.tarea { background: #fffbea; border-left: 3px solid var(--pfj-naranja); padding: 14px 16px; margin: 0 0 20px; }
+.tarea__etq { font-size: 12px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; color: #9a6a00; display: block; margin-bottom: 4px; }
+.tarea p { font-weight: 600; margin: 0 0 8px; font-size: 16px; }
+.tarea textarea { min-height: 92px; resize: vertical; margin-top: 0; }
+.tarea__pie { display: flex; align-items: center; gap: 12px; margin-top: 8px; font-size: 13px; color: var(--gris-medio); }
+.boton-borde { background: #fff; border: 1px solid var(--texto); color: var(--texto); border-radius: 3px; padding: 5px 12px; font: 600 13px "Open Sans", sans-serif; cursor: pointer; }
+.boton-borde:hover { background: var(--gris-suave); }
+
+/* ---------- Repaso por sección ---------- */
+.repaso { margin: 26px 0 8px; }
+.repaso__titulo { font-size: 14px; font-weight: 700; text-transform: uppercase; letter-spacing: .03em; margin: 0 0 4px; display: flex; justify-content: space-between; }
+.repaso__puntaje { color: var(--gris-medio); font-weight: 600; }
+
+/* ---------- Aviso ---------- */
+.aviso { font-size: 14px; background: var(--gris-suave); padding: 10px 14px; margin: 14px 0 0; }
+
+/* ---------- Pie ---------- */
+.pie { margin-top: 90px; background: #333; color: #fff; font-size: 13px; font-weight: 400; padding: 34px 24px; text-align: center; }
+.pie a { color: #fff; }
+
+@media (max-width: 900px) {
+  .mosaico { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 760px) {
+  .mosaico { grid-template-columns: 1fr; }
+  .indice ol { columns: 1; }
+  .campos { grid-template-columns: 1fr; }
+  .titulo-bloque { margin-top: 40px; }
+  .titulo-bloque h1 { font-size: 28px; }
+}
