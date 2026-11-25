@@ -360,7 +360,8 @@ function construirResumen_(ss, maestra) {
   h.getRange("A16:B16").setBackground("#fff2cc");
   h.getRange("D16:F16").setBackground("#fff2cc");
   h.getRange("D30:H30").setBackground("#fff2cc");
-  h.getRange("G32:G200").setNumberFormat("0%");
+  h.getRange("G32:G1000").setNumberFormat("0%");
+  h.getRange("H32:H1000").setNumberFormat("dd/mm/yyyy hh:mm");
   h.setColumnWidth(1, 330); h.setColumnWidth(2, 110); h.setColumnWidth(3, 30);
   h.setColumnWidth(4, 90); h.setColumnWidth(5, 420); h.setColumnWidth(6, 110);
   h.setColumnWidth(7, 110); h.setColumnWidth(8, 150);
