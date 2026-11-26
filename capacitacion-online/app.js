@@ -268,7 +268,9 @@ function iniciarModulos() {
     const ant = lista[i - 1], sig = lista[i + 1];
     // Desde cualquier módulo se puede saltar directo a "Terminar la capacitación"
     const alFinal = sig && $("#finalizar") ? `<a class="boton-borde" href="#finalizar">Ir al final ⇥</a>` : "";
-    nav.innerHTML = (ant ? `<a class="boton-borde" href="#modulo-${ant.dataset.modulo}">← Módulo ${ant.dataset.modulo}</a>` : `<span></span>`) +
+    // y volver al inicio (Módulo 1). En el módulo 2 no hace falta: "← Módulo 1" ya lleva ahí.
+    const alInicio = i >= 2 ? `<a class="boton-borde" href="#modulo-${lista[0].dataset.modulo}">⇤ Ir al inicio</a>` : "";
+    nav.innerHTML = (ant ? `<span class="modulo__nav-izq">${alInicio}<a class="boton-borde" href="#modulo-${ant.dataset.modulo}">← Módulo ${ant.dataset.modulo}</a></span>` : `<span></span>`) +
       (sig ? `<span class="modulo__nav-der">${alFinal}<a class="boton-rojo" href="#modulo-${sig.dataset.modulo}">Siguiente: Módulo ${sig.dataset.modulo} →</a></span>` : `<span></span>`);
   });
   window.addEventListener("hashchange", () => irAHash(true));
