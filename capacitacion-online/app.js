@@ -383,7 +383,7 @@ function resumenAvance() {
     const tienePreguntas = DATOS.preguntas.some((q) => String(q.modulo) === etiquetaModulo(n));
     const rep = estado.repasos[n];
     return { n, titulo: $(".modulo__cabecera h2", m).textContent, hechas, total: ss.length,
-             repaso: rep, listo: hechas === ss.length && (!tienePreguntas || !!rep) };
+             tienePreguntas, repaso: rep, listo: hechas === ss.length && (!tienePreguntas || !!rep) };
   });
 }
 function pintarFinal() {
@@ -392,7 +392,7 @@ function pintarFinal() {
   const r = resumenAvance(), todo = r.every((x) => x.listo);
   cont.innerHTML = `<ul class="final__lista">` + r.map((x) =>
     `<li class="${x.listo ? "ok" : ""}"><a href="#modulo-${x.n}">Módulo ${x.n}: ${esc(x.titulo)}</a><span>${x.hechas} de ${x.total} secciones · ` +
-    (x.repaso ? `repaso ${x.repaso.puntaje} de ${x.repaso.total}` : "repaso pendiente") + `</span></li>`).join("") + `</ul>` +
+    (x.repaso ? `repaso ${x.repaso.puntaje} de ${x.repaso.total}` : x.tienePreguntas ? "repaso pendiente" : "sin repaso") + `</span></li>`).join("") + `</ul>` +
     (todo ? "" : `<p class="final__falta">Te falta completar lo que está en gris. Haz clic en el módulo para terminarlo.</p>`);
   const btn = $("#final-enviar");
   btn.disabled = !todo || !!estado.finalizado;
